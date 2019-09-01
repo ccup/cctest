@@ -15,6 +15,9 @@ private:
 
 private:
   virtual void runTest() {}
+
+private:
+  void runBare(TestResult& result);
 };
 
 } // namespace cctest

@@ -2,7 +2,8 @@
 
 namespace cctest {
 
-TestResult::TestResult() : numOfRuns(0) {
+TestResult::TestResult()
+  : numOfRuns(0), numOfFails(0) {
 }
 
 void TestResult::startTestCase() {
@@ -11,6 +12,14 @@ void TestResult::startTestCase() {
 
 int TestResult::runCount() const {
   return numOfRuns;
+}
+
+void TestResult::addFailure() {
+  numOfFails++;
+}
+
+int TestResult::failCount() const {
+  return numOfFails;
 }
 
 } // namespace cctest
