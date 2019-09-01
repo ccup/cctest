@@ -17,10 +17,7 @@ private:
   virtual void runTest() {}
 
 private:
-  using Method = void(TestCase::*)();
-
   void runBare(TestResult& result);
-  bool protect(TestResult& result, Method method);
 };
 
 } // namespace cctest

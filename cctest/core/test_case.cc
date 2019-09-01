@@ -1,29 +1,39 @@
 #include "cctest/core/test_case.h"
 #include "cctest/core/assertion_error.h"
 #include "cctest/core/test_result.h"
+#include "cctest/core/internal/test_case_method.h"
 
 namespace cctest {
 
-bool TestCase::protect(TestResult& result, Method method) {
-  bool succ = false;
-  try {
-    (this->*method)();
-    succ = true;
-  } catch (const AssertionError&) {
-    result.addFailure();
-  } catch (const std::exception&) {
-    result.addError();
-  } catch (...) {
-    result.addError();
+namespace {
+
+struct Functor : TestCaseMethod {
+  using Method = void(TestCase::*)();
+
+  Functor(TestCase* self, Method method)
+    : self(self), method(method) {
   }
-  return succ;
-}
+
+private:
+  bool operator()() const override {
+    (self->*method)();
+    return true;
+  }
+
+private:
+  TestCase* self;
+  Method method;
+};
+
+} // namespace
+
+#define PROTECT(method) result.protect(Functor(this, &TestCase::method))
 
 void TestCase::runBare(TestResult& result) {
-  if (protect(result, &TestCase::setUp)) {
-    protect(result, &TestCase::runTest);
+  if (PROTECT(setUp)) {
+    PROTECT(runTest);
   }
-  protect(result, &TestCase::tearDown);
+  PROTECT(tearDown);
 }
 
 void TestCase::run(TestResult& result) {

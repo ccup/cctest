@@ -1,4 +1,6 @@
 #include "cctest/core/test_result.h"
+#include "cctest/core/assertion_error.h"
+#include "cctest/core/internal/test_case_method.h"
 
 namespace cctest {
 
@@ -14,20 +16,33 @@ int TestResult::runCount() const {
   return numOfRuns;
 }
 
-void TestResult::addFailure() {
-  numOfFails++;
-}
-
 int TestResult::failCount() const {
   return numOfFails;
 }
 
-void TestResult::addError() {
+int TestResult::errorCount() const {
+  return numOfErrors;
+}
+
+inline void TestResult::addFailure() {
+  numOfFails++;
+}
+
+inline void TestResult::addError() {
   numOfErrors++;
 }
 
-int TestResult::errorCount() const {
-  return numOfErrors;
+bool TestResult::protect(const TestCaseMethod& f) {
+  try {
+    return f();
+  } catch (const AssertionError&) {
+    addFailure();
+  } catch (const std::exception&) {
+    addError();
+  } catch (...) {
+    addError();
+  }
+  return false;
 }
 
 } // namespace cctest

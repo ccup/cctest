@@ -3,6 +3,8 @@
 
 namespace cctest {
 
+struct TestCaseMethod;
+
 struct TestResult {
   TestResult();
 
@@ -10,10 +12,13 @@ struct TestResult {
   int runCount() const;
 
   int failCount() const;
-  void addFailure();
-
-  void addError();
   int errorCount() const;
+
+  bool protect(const TestCaseMethod&);
+
+private:
+  void addFailure();
+  void addError();
 
 private:
   int numOfRuns;
