@@ -1,5 +1,4 @@
 #include "cctest/core/test_suite.h"
-#include "cctest/core/test.h"
 
 namespace cctest {
 

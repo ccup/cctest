@@ -39,4 +39,10 @@ TEST_F(TestCaseSpec, full_lifecycle_for_test_case) {
   ASSERT_EQ("[setUp][runTest][tearDown]", result);
 }
 
+TEST(NamedTestCase, named_test_case) {
+  TestCase test("test case");
+  ASSERT_EQ("test case", test.getName());
+}
+
+
 } // namespace
