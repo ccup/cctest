@@ -52,4 +52,16 @@ TEST_F(TestResultSpec, throw_assertion_error_on_setup) {
   ASSERT_FALSE(test.wasRun);
 }
 
+struct FailureOnTearDown : TestCase {
+  void tearDown() override {
+    throw AssertionError("product.cc:57", "expected value == 2, but got 3");
+  }
+};
+
+TEST_F(TestResultSpec, throw_assertion_error_on_tear_down) {
+  FailureOnTearDown test;
+  run(test);
+  ASSERT_EQ(1, result.failCount());
+}
+
 } // namespace
