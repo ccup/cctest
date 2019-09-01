@@ -45,3 +45,52 @@ cc_test(
         "@com_github_google_googletest//:gtest_main",        
     ],
 )
+
+cc_test(
+  name = "test_case_spec",
+  srcs = [
+      "core/test_case_spec.cc",
+  ],
+  deps = [
+        ":cctest",
+        "@com_github_google_googletest//:gtest",
+        "@com_github_google_googletest//:gtest_main",      
+  ]
+)
+
+cc_test(
+  name = "test_fixture_spec",
+  srcs = [
+      "core/test_fixture_spec.cc",
+  ],
+  deps = [
+        ":cctest",
+        "@com_github_google_googletest//:gtest",
+        "@com_github_google_googletest//:gtest_main",      
+  ]
+)
+
+cc_test(
+  name = "test_suite_spec",
+  srcs = [
+      "core/test_suite_spec.cc",
+  ],
+  deps = [
+        ":cctest",
+        "@com_github_google_googletest//:gtest",
+        "@com_github_google_googletest//:gtest_main",      
+  ]
+)
+
+cc_test(
+  name = "test_result_spec",
+  srcs = [
+      "core/test_result_spec.cc",
+  ],
+  deps = [
+        ":cctest",
+        "@com_github_google_googletest//:gtest",
+        "@com_github_google_googletest//:gtest_main",      
+  ]
+)
+
