@@ -4,14 +4,22 @@
 
 namespace cctest {
 
-void TestCase::runBare(TestResult& result) {
-  setUp();
+bool TestCase::protect(TestResult& result, Method method) {
+  bool succ = false;
   try {
-    runTest();
+    (this->*method)();
+    succ = true;
   } catch (const AssertionError&) {
     result.addFailure();
   }
-  tearDown();
+  return succ;
+}
+
+void TestCase::runBare(TestResult& result) {
+  if (protect(result, &TestCase::setUp)) {
+    protect(result, &TestCase::runTest);
+  }
+  protect(result, &TestCase::tearDown);
 }
 
 void TestCase::run(TestResult& result) {
