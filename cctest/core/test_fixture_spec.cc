@@ -1,37 +1,37 @@
 #include "gtest/gtest.h"
 #include "cctest/core/test_case.h"
-#include "cctest/core/test_method.h"
-#include "cctest/core/test_fixture.h"
+#include "cctest/core/test_result.h"
 
 using namespace cctest;
 
 namespace {
 
-bool wasSucc = false;
+struct WasSucc : TestCase {
+  bool succ() const {
+    return wasSucc;
+  }
 
-struct WasSucc : TestFixture {
-  void testMethod() {
+private:
+  void runTest() override {
     wasSucc = true;
   }
+
+private:
+  bool wasSucc = false;
 };
 
 struct TestFixtureSpec : testing::Test {
 protected:
-  TestFixtureSpec() {
-    wasSucc = false;
-  }
-
   void run(cctest::Test& test) {
-    test.run();
+    TestResult dummy;
+    test.run(dummy);
   }
 };
 
 TEST_F(TestFixtureSpec, make_sure_be_succ) {
-  TestMethod<WasSucc> test = &WasSucc::testMethod;
-
-  ASSERT_FALSE(wasSucc);
+  WasSucc test;
   run(test);
-  ASSERT_TRUE(wasSucc);
+  ASSERT_TRUE(test.succ());
 }
 
 } // namespace

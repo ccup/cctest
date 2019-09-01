@@ -11,7 +11,7 @@ struct TestCase : Test, protected TestFixture {
   using Test::Test;
 
 private:
-  void run() override;
+  void run(TestResult& result) override;
 
 private:
   virtual void runTest() {}

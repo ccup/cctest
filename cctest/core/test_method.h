@@ -2,7 +2,6 @@
 #define HBC36D615_D4BB_449A_9829_16E8CE8EC076
 
 #include "cctest/core/test_case.h"
-#include "cctest/core/test_fixture.h"
 
 namespace cctest {
 
@@ -17,21 +16,23 @@ public:
 
 private:
   void setUp() override {
-    self.setUp();
+    self = fixture = new Fixture;
+    self->setUp();
   }
 
   void runTest() override {
-    (fixture.*method)();
+    (fixture->*method)();
   }
 
   void tearDown() override {
-    self.tearDown();
+    self->tearDown();
+    delete fixture;
   }
 
 private:
-  Fixture fixture;
+  Fixture* fixture = nullptr;
+  TestFixture* self = nullptr;
   Method method;
-  TestFixture& self = fixture;
 };
 
 } // namespace cctest

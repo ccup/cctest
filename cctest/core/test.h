@@ -5,11 +5,13 @@
 
 namespace cctest {
 
+struct TestResult;
+
 struct Test {
   Test(const std::string& name = "");
   const std::string& getName() const;
 
-  virtual void run() = 0;
+  virtual void run(TestResult&) = 0;
   virtual ~Test() {}
 
 private:

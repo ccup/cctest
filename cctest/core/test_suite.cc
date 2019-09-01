@@ -12,9 +12,9 @@ void TestSuite::add(Test* test) {
   tests.push_back(test);
 }
 
-void TestSuite::run() {
+void TestSuite::run(TestResult& result) {
   for (auto test : tests) {
-    test->run();
+    test->run(result);
   }
 }
 

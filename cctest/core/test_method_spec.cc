@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "cctest/core/test_method.h"
+#include "cctest/core/test_result.h"
 
 using namespace cctest;
 
@@ -8,6 +9,15 @@ namespace {
 std::string result;
 
 struct WasRun : TestFixture {
+  WasRun() : method(&WasRun::testMethod) {
+    result.clear();
+  }
+
+  void expectResult(const std::string& expected) {
+    run(method);
+    ASSERT_EQ(expected, result);
+  }
+
   void testMethod() {
     result += "[runTest]";
   }
@@ -20,23 +30,21 @@ private:
   void tearDown() override {
     result += "[tearDown]";
   }
-};
 
-struct TestMethodSpec : testing::Test {
-protected:
-  TestMethodSpec() {
-    result = "";
-  }
-
+private:
   void run(cctest::Test& test) {
-    test.run();
+    TestResult dummy;
+    test.run(dummy);
   }
+
+private:
+  TestMethod<WasRun> method;
 };
 
-TEST_F(TestMethodSpec, full_lifecycle_for_test_case) {
-  TestMethod<WasRun> test = &WasRun::testMethod;
-  run(test);
-  ASSERT_EQ("[setUp][runTest][tearDown]", result);
+
+TEST(TestMethodSpec, full_lifecycle_for_test_case) {
+  WasRun wasRun;
+  wasRun.expectResult("[setUp][runTest][tearDown]");
 }
 
 } // namespace

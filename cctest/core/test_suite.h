@@ -8,10 +8,12 @@ namespace cctest {
 
 struct TestSuite : Test {
   using Test::Test;
-  ~TestSuite();
+  ~TestSuite() override;
 
   void add(Test* test);
-  void run();
+
+private:
+  void run(TestResult& result) override;
 
 private:
   std::vector<Test*> tests;
