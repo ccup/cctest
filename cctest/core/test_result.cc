@@ -1,6 +1,7 @@
 #include "cctest/core/test_result.h"
 #include "cctest/core/assertion_error.h"
 #include "cctest/core/internal/test_case_method.h"
+#include <algorithm>
 
 namespace cctest {
 
@@ -16,11 +17,17 @@ int TestResult::runCount() const {
 }
 
 int TestResult::failCount() const {
-  return failures.size();
+  return std::count_if(failures.begin(), failures.end(), [](const TestFailure& f) {
+    return f.isFailure();
+  });
 }
 
 int TestResult::errorCount() const {
-  return errors.size();
+  return failures.size() - failCount();
+}
+
+const std::vector<TestFailure>& TestResult::getFailures() const {
+  return failures;
 }
 
 inline void TestResult::addFailure(std::string&& msg) {
@@ -28,7 +35,7 @@ inline void TestResult::addFailure(std::string&& msg) {
 }
 
 inline void TestResult::addError(std::string&& msg) {
-  errors.emplace_back(std::move(msg), false);
+  failures.emplace_back(std::move(msg), false);
 }
 
 bool TestResult::protect(const TestCaseMethod& f) {
@@ -42,14 +49,6 @@ bool TestResult::protect(const TestCaseMethod& f) {
     addError(std::string("uncaught unknown exception") + " " + f.where() + "\n" + "");
   }
   return false;
-}
-
-const std::vector<TestFailure>& TestResult::getFailures() const {
-  return failures;
-}
-
-const std::vector<TestFailure>& TestResult::getErrors() const {
-  return errors;
 }
 
 } // namespace cctest
