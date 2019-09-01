@@ -19,11 +19,8 @@ struct TestResult {
 
   bool protect(const TestCaseMethod&);
 
-  using TestFailures = std::vector<TestFailure>;
-  const TestFailures& getFailures() const;
-
-  using TestErrors = std::vector<std::string>;
-  const TestErrors& getErrors() const;
+  const std::vector<TestFailure>& getFailures() const;
+  const std::vector<TestFailure>& getErrors() const;
 
 private:
   void addFailure(std::string&& msg);
@@ -31,9 +28,8 @@ private:
 
 private:
   int numOfRuns;
-
-  TestFailures failures;
-  TestErrors errors;
+  std::vector<TestFailure> failures;
+  std::vector<TestFailure> errors;
 };
 
 } // namespace cctest
