@@ -45,5 +45,10 @@ TEST_F(TestSuiteSpec, package_sub_suite_into_test_suite) {
   ASSERT_EQ(2, numOfRuns);
 }
 
+TEST(NamedTestSuite, named_test_suite) {
+  TestSuite suite("test suite");
+  ASSERT_EQ("test suite", suite.getName());
+}
+
 
 } // namespace

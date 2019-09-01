@@ -2,6 +2,13 @@
 
 namespace cctest {
 
+TestSuite::TestSuite(const std::string& name)
+  : name(name) {}
+
+const std::string& TestSuite::getName() const {
+  return name;
+}
+
 TestSuite::~TestSuite() {
   for (auto test : tests) {
     delete test;
