@@ -11,6 +11,8 @@ bool TestCase::protect(TestResult& result, Method method) {
     succ = true;
   } catch (const AssertionError&) {
     result.addFailure();
+  } catch (const std::exception&) {
+    result.addError();
   }
   return succ;
 }

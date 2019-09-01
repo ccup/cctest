@@ -64,4 +64,16 @@ TEST_F(TestResultSpec, throw_assertion_error_on_tear_down) {
   ASSERT_EQ(1, result.failCount());
 }
 
+struct ErrorOnRunningTest : TestCase {
+  void runTest() override {
+    throw std::exception();
+  }
+};
+
+TEST_F(TestResultSpec, throw_std_exception_on_run_test) {
+  ErrorOnRunningTest test;
+  run(test);
+  ASSERT_EQ(1, result.errorCount());
+}
+
 } // namespace

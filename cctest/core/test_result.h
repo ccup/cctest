@@ -12,9 +12,13 @@ struct TestResult {
   int failCount() const;
   void addFailure();
 
+  void addError();
+  int errorCount() const;
+
 private:
   int numOfRuns;
   int numOfFails;
+  int numOfErrors;
 };
 
 } // namespace cctest
