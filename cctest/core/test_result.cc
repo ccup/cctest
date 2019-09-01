@@ -4,8 +4,7 @@
 
 namespace cctest {
 
-TestResult::TestResult()
-  : numOfRuns(0), numOfFails(0), numOfErrors(0) {
+TestResult::TestResult() : numOfRuns(0) {
 }
 
 void TestResult::startTestCase() {
@@ -17,22 +16,21 @@ int TestResult::runCount() const {
 }
 
 int TestResult::failCount() const {
-  return numOfFails;
+  return failures.size();
 }
 
 int TestResult::errorCount() const {
-  return numOfErrors;
+  return errors.size();
 }
 
 inline void TestResult::addFailure(std::string&& msg) {
-  numOfFails++;
-  failures.emplace_back(std::move(msg));
+  failures.emplace_back(std::move(msg), true);
 }
 
 inline void TestResult::addError(std::string&& msg) {
-  numOfErrors++;
   errors.emplace_back(std::move(msg));
 }
+
 
 bool TestResult::protect(const TestCaseMethod& f) {
   try {

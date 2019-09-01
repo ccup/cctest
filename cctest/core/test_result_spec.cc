@@ -43,7 +43,10 @@ TEST_F(TestResultSpec, assert_except_msg_on_running_test_failed) {
 
   auto& fails = result.getFailures();
   ASSERT_EQ(1, fails.size());
-  ASSERT_EQ(test.expectMsg(), fails[0]);
+
+  auto& fail = fails[0];
+  ASSERT_TRUE(fail.isFailure());
+  ASSERT_EQ(test.expectMsg(), fail.getExceptionMsg());
 }
 
 struct FailureOnSetUp : TestCase {

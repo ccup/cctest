@@ -2,7 +2,7 @@
 #define HC9E8B8E2_729D_469F_8C91_90EF3791FC8E
 
 #include <vector>
-#include <string>
+#include "cctest/core/test_failure.h"
 
 namespace cctest {
 
@@ -19,7 +19,7 @@ struct TestResult {
 
   bool protect(const TestCaseMethod&);
 
-  using TestFailures = std::vector<std::string>;
+  using TestFailures = std::vector<TestFailure>;
   const TestFailures& getFailures() const;
 
   using TestErrors = std::vector<std::string>;
@@ -31,8 +31,6 @@ private:
 
 private:
   int numOfRuns;
-  int numOfFails;
-  int numOfErrors;
 
   TestFailures failures;
   TestErrors errors;
