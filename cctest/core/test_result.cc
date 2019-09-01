@@ -38,15 +38,32 @@ inline void TestResult::addError(std::string&& msg) {
   failures.emplace_back(std::move(msg), false);
 }
 
+namespace {
+
+inline std::string msg(const char* why, const char* where, const char* what) {
+  return std::string(why) + ' ' + where + '\n' + what;
+}
+
+struct NilException {
+  const char* what() const {
+    return "";
+  }
+} const e;
+
+} // namespace
+
+#define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()))
+#define ON_ERROR(except) addError(msg(except, f.where(), e.what()))
+
 bool TestResult::protect(const TestCaseMethod& f) {
   try {
     return f();
   } catch (const AssertionError& e) {
-    addFailure(std::string("assertion fail") + ' ' + f.where() + '\n' + e.what());
+    ON_FAIL("assertion fail");
   } catch (const std::exception& e) {
-    addError(std::string("uncaught std::exception") + ' ' + f.where() + '\n' + e.what());
+    ON_ERROR("uncaught std::exception");
   } catch (...) {
-    addError(std::string("uncaught unknown exception") + " " + f.where() + "\n" + "");
+    ON_ERROR("uncaught unknown exception");
   }
   return false;
 }
