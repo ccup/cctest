@@ -42,7 +42,7 @@ bool TestResult::protect(const TestCaseMethod& f) {
   } catch (const std::exception& e) {
     addError(std::string("uncaught std::exception") + ' ' + f.where() + '\n' + e.what());
   } catch (...) {
-    addError("");
+    addError(std::string("uncaught unknown exception") + " " + f.where() + "\n" + "");
   }
   return false;
 }
