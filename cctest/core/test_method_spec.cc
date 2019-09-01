@@ -7,16 +7,17 @@ namespace {
 
 std::string result;
 
-struct WasRun {
-  void setUp() {
-    result += "[setUp]";
-  }
-
+struct WasRun : TestFixture {
   void testMethod() {
     result += "[runTest]";
   }
 
-  void tearDown() {
+private:
+  void setUp() override {
+    result += "[setUp]";
+  }
+
+  void tearDown() override {
     result += "[tearDown]";
   }
 };
@@ -28,7 +29,7 @@ protected:
   }
 };
 
-TEST_F(TestMethodSpec, make_sure_the_invoked_order_is_ok) {
+TEST_F(TestMethodSpec, full_lifecycle_for_test_case) {
   TestMethod<WasRun> method = &WasRun::testMethod;
   method.run();
   ASSERT_EQ("[setUp][runTest][tearDown]", result);

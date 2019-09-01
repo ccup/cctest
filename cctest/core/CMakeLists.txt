@@ -15,3 +15,12 @@ cc_test(
   DEPS
     cctest::cctest
 )
+
+cc_test(
+  NAME
+    test_fixture_spec
+  SRCS
+    "test_fixture_spec.cc"
+  DEPS
+    cctest::cctest
+)

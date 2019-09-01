@@ -33,7 +33,7 @@ protected:
   }
 };
 
-TEST_F(TestCaseSpec, make_sure_be_succ) {
+TEST_F(TestCaseSpec, full_lifecycle_for_test_case) {
   WasRun test;
   run(test);
   ASSERT_EQ("[setUp][runTest][tearDown]", result);
