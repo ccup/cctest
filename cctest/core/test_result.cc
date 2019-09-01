@@ -29,8 +29,9 @@ inline void TestResult::addFailure(std::string&& msg) {
   failures.emplace_back(std::move(msg));
 }
 
-inline void TestResult::addError() {
+inline void TestResult::addError(std::string&& msg) {
   numOfErrors++;
+  errors.emplace_back(std::move(msg));
 }
 
 bool TestResult::protect(const TestCaseMethod& f) {
@@ -38,16 +39,21 @@ bool TestResult::protect(const TestCaseMethod& f) {
     return f();
   } catch (const AssertionError& e) {
     addFailure(std::string("assertion fail") + ' ' + f.where() + '\n' + e.what());
-  } catch (const std::exception&) {
-    addError();
+  } catch (const std::exception& e) {
+    addError(std::string("uncaught std::exception") + ' ' + f.where() + '\n' + e.what());
   } catch (...) {
-    addError();
+    addError("");
   }
   return false;
 }
 
-const std::vector<std::string> TestResult::getFailures() const {
+const TestResult::TestFailures& TestResult::getFailures() const {
   return failures;
 }
+
+const TestResult::TestErrors& TestResult::getErrors() const {
+  return errors;
+}
+
 
 } // namespace cctest

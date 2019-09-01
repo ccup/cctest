@@ -80,6 +80,12 @@ TEST_F(TestResultSpec, throw_assertion_error_on_tear_down) {
 }
 
 struct ErrorOnRunningTest : TestCase {
+  const char* expectMsg() const {
+    return "uncaught std::exception in the runTest\n"
+           "std::exception";
+  }
+
+private:
   void runTest() override {
     throw std::exception();
   }
@@ -89,6 +95,15 @@ TEST_F(TestResultSpec, throw_std_exception_on_run_test) {
   ErrorOnRunningTest test;
   run(test);
   ASSERT_EQ(1, result.errorCount());
+}
+
+TEST_F(TestResultSpec, extract_error_msgt_on_running_test_failed) {
+  ErrorOnRunningTest test;
+  run(test);
+
+  auto& errors = result.getErrors();
+  ASSERT_EQ(1, errors.size());
+  ASSERT_EQ(test.expectMsg(), errors.front());
 }
 
 struct NilException {};
