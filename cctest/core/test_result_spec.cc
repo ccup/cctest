@@ -18,6 +18,12 @@ protected:
 };
 
 struct FailureOnRunTest : TestCase {
+  const char* expectMsg() const {
+    return "assertion fail in the runTest\n"
+           "product.cc:57\n"
+           "expected value == 2, but got 3";
+  }
+
 private:
   void runTest() override {
     throw AssertionError("product.cc:57", "expected value == 2, but got 3");
@@ -29,6 +35,15 @@ TEST_F(TestResultSpec, throw_assertion_error_on_run_test) {
   run(test);
 
   ASSERT_EQ(1, result.failCount());
+}
+
+TEST_F(TestResultSpec, assert_except_msg_on_running_test_failed) {
+  FailureOnRunTest test;
+  run(test);
+
+  auto& fails = result.getFailures();
+  ASSERT_EQ(1, fails.size());
+  ASSERT_EQ(test.expectMsg(), fails[0]);
 }
 
 struct FailureOnSetUp : TestCase {

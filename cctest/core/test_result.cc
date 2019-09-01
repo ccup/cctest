@@ -24,8 +24,9 @@ int TestResult::errorCount() const {
   return numOfErrors;
 }
 
-inline void TestResult::addFailure() {
+inline void TestResult::addFailure(std::string&& msg) {
   numOfFails++;
+  failures.emplace_back(std::move(msg));
 }
 
 inline void TestResult::addError() {
@@ -35,14 +36,18 @@ inline void TestResult::addError() {
 bool TestResult::protect(const TestCaseMethod& f) {
   try {
     return f();
-  } catch (const AssertionError&) {
-    addFailure();
+  } catch (const AssertionError& e) {
+    addFailure(std::string("assertion fail") + ' ' + f.where() + '\n' + e.what());
   } catch (const std::exception&) {
     addError();
   } catch (...) {
     addError();
   }
   return false;
+}
+
+const std::vector<std::string> TestResult::getFailures() const {
+  return failures;
 }
 
 } // namespace cctest
