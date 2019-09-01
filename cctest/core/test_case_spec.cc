@@ -28,7 +28,7 @@ protected:
     result = "";
   }
 
-  void run(TestCase& test) {
+  void run(cctest::Test& test) {
     test.run();
   }
 };

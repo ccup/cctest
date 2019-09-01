@@ -9,6 +9,3 @@ void TestCase::run() {
 }
 
 } // namespace cctest
-
-
-

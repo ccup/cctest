@@ -27,11 +27,15 @@ protected:
   TestMethodSpec() {
     result = "";
   }
+
+  void run(cctest::Test& test) {
+    test.run();
+  }
 };
 
 TEST_F(TestMethodSpec, full_lifecycle_for_test_case) {
-  TestMethod<WasRun> method = &WasRun::testMethod;
-  method.run();
+  TestMethod<WasRun> test = &WasRun::testMethod;
+  run(test);
   ASSERT_EQ("[setUp][runTest][tearDown]", result);
 }
 

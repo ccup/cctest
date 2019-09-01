@@ -2,19 +2,18 @@
 #define HEBA1EEE2_F46F_4F44_8247_10C8AB3D0FCA
 
 #include <vector>
+#include "cctest/core/test.h"
 
 namespace cctest {
 
-struct TestCase;
-
-struct TestSuite {
+struct TestSuite : Test {
   ~TestSuite();
 
-  void add(TestCase* test);
+  void add(Test* test);
   void run();
 
 private:
-  std::vector<TestCase*> tests;
+  std::vector<Test*> tests;
 };
 
 } // namespace cctest

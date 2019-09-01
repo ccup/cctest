@@ -1,5 +1,5 @@
 #include "cctest/core/test_suite.h"
-#include "cctest/core/test_case.h"
+#include "cctest/core/test.h"
 
 namespace cctest {
 
@@ -9,7 +9,7 @@ TestSuite::~TestSuite() {
   }
 }
 
-void TestSuite::add(TestCase* test) {
+void TestSuite::add(Test* test) {
   tests.push_back(test);
 }
 
