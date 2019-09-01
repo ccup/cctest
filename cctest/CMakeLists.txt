@@ -1,20 +1,20 @@
 file(GLOB_RECURSE cctest_hdrs  
-	  "*.h"
-	  "*.hpp"	
+    "*.h"
+    "*.hpp"	
 )
 
 file(GLOB_RECURSE cctest_tests 
-	  "*_spec.cc"
-	  "*_test.cc"	
+    "*_spec.cc"
+    "*_test.cc"	
 )
 
 file(GLOB_RECURSE cctest_srcs 
-	  "*.cc"
+	"*.cc"
 )
 
 list(REMOVE_ITEM  cctest_srcs 
-    ${cctest_tests}
-	  "main/main.cc"
+	${cctest_tests}
+	"${CMAKE_CURRENT_SOURCE_DIR}/main/main.cc"
 )
 
 cc_library(

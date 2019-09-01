@@ -13,7 +13,9 @@ public:
   }
 
   void run() {
+    self.setUp();
     (self.*method)();
+    self.tearDown();
   }
 
 private:
