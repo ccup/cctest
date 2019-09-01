@@ -13,6 +13,8 @@ bool TestCase::protect(TestResult& result, Method method) {
     result.addFailure();
   } catch (const std::exception&) {
     result.addError();
+  } catch (...) {
+    result.addError();
   }
   return succ;
 }
