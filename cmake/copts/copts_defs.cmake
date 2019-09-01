@@ -85,8 +85,7 @@ list(APPEND CCTEST_GCC_FLAGS
     "-Wwrite-strings"
     "-Wno-missing-field-initializers"
     "-Wno-sign-compare"
-    "-Wshadow"
-    "-Wno-shadow-field-in-constructor"
+    "-Wno-shadow"
 )
 
 list(APPEND CCTEST_GCC_TEST_FLAGS
