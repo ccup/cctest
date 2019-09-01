@@ -5,7 +5,6 @@ using namespace cctest;
 
 namespace {
 
-
 std::string result;
 
 struct WasRun {
@@ -22,7 +21,14 @@ struct WasRun {
   }
 };
 
-TEST(TestMethodSpec, make_sure_the_invoked_order_is_ok) {
+struct TestMethodSpec : testing::Test {
+protected:
+  TestMethodSpec() {
+    result = "";
+  }
+};
+
+TEST_F(TestMethodSpec, make_sure_the_invoked_order_is_ok) {
   TestMethod<WasRun> method = &WasRun::testMethod;
   method.run();
   ASSERT_EQ("[setUp][runTest][tearDown]", result);
