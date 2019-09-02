@@ -1,5 +1,5 @@
 #include "cctest/core/test_result.h"
-#include "cctest/core/assertion_error.h"
+#include "cctest/except/assertion_error.h"
 #include "cctest/core/internal/test_case_method.h"
 #include <algorithm>
 

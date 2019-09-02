@@ -58,6 +58,10 @@ endif()
 
 add_subdirectory(cctest)
 
+if(BUILD_TESTING)
+  add_subdirectory(spec)
+endif()
+
 if(CCTEST_ENABLE_INSTALL)
   # install as a subdirectory only
   install(EXPORT ${PROJECT_NAME}_targets

@@ -1,29 +1,33 @@
 file(GLOB_RECURSE cctest_hdrs  
-    "*.h"
-    "*.hpp"	
+  "*.h"
+  "*.hpp"	
 )
 
-file(GLOB_RECURSE cctest_tests 
-    "*_spec.cc"
-    "*_test.cc"	
+file(GLOB_RECURSE cctest_main_src 
+  "main.cc"
 )
 
 file(GLOB_RECURSE cctest_srcs 
-	"*.cc"
+  "*.cc"
 )
 
-list(REMOVE_ITEM  cctest_srcs 
-	${cctest_tests}
-	"${CMAKE_CURRENT_SOURCE_DIR}/main/main.cc"
-)
+list(REMOVE_ITEM cctest_srcs ${cctest_main_src})
 
 cc_library(
   NAME 
     cctest
-  SRCS
+  HDRS 
     ${cctest_hdrs}
+  SRCS
     ${cctest_srcs}
 )
 
-add_subdirectory(core)
-add_subdirectory(main)
+cc_library(
+  NAME 
+    cctest_main
+  SRCS
+    ${cctest_main_src}
+  DEPS
+    cctest
+)
+

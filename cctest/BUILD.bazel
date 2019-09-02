@@ -3,94 +3,33 @@ licenses(["notice"])  # Apache
 exports_files(["LICENSE"])
 
 cc_library(
-    name = "cctest",
-    srcs = glob(
-        include = [
-            "**/*.cc"
-        ],
-        exclude = [
-            "**/*_spec.cc", 
-            "**/*_test.cc",
-            "main/main.cc",
-        ],
-    ),
-    hdrs = glob(
-      	include = [
-            "**/*.h", 
-            "**/*.hpp"
-        ],
-    ),
-    visibility = ["//visibility:public"],
+  name = "cctest",
+  srcs = glob(
+    include = [
+      "**/*.cc"
+    ],
+    exclude = [
+      "**/*_spec.cc", 
+      "**/*_test.cc",
+      "main/main.cc",
+    ],
+  ),
+  hdrs = glob(
+    	include = [
+      "**/*.h", 
+      "**/*.hpp"
+    ],
+  ),
+  visibility = ["//visibility:public"],
 )
 
 cc_library(
-    name = "main",
-    srcs = [
-        "main/main.cc",
-    ],
-    deps = [
-        ":cctest",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-cc_test(
-    name = "test_method_spec",
-    srcs = [
-        "core/test_method_spec.cc"
-    ],
-    deps = [
-        ":cctest",
-        "@com_github_google_googletest//:gtest",
-        "@com_github_google_googletest//:gtest_main",        
-    ],
-)
-
-cc_test(
-  name = "test_case_spec",
+  name = "main",
   srcs = [
-      "core/test_case_spec.cc",
+    "main/main.cc",
   ],
   deps = [
-        ":cctest",
-        "@com_github_google_googletest//:gtest",
-        "@com_github_google_googletest//:gtest_main",      
-  ]
-)
-
-cc_test(
-  name = "test_fixture_spec",
-  srcs = [
-      "core/test_fixture_spec.cc",
+    ":cctest",
   ],
-  deps = [
-        ":cctest",
-        "@com_github_google_googletest//:gtest",
-        "@com_github_google_googletest//:gtest_main",      
-  ]
+  visibility = ["//visibility:public"],
 )
-
-cc_test(
-  name = "test_suite_spec",
-  srcs = [
-      "core/test_suite_spec.cc",
-  ],
-  deps = [
-        ":cctest",
-        "@com_github_google_googletest//:gtest",
-        "@com_github_google_googletest//:gtest_main",      
-  ]
-)
-
-cc_test(
-  name = "test_result_spec",
-  srcs = [
-      "core/test_result_spec.cc",
-  ],
-  deps = [
-        ":cctest",
-        "@com_github_google_googletest//:gtest",
-        "@com_github_google_googletest//:gtest_main",      
-  ]
-)
-

@@ -1,4 +1,4 @@
-#include "cctest/core/assertion_error.h"
+#include "cctest/except/assertion_error.h"
 
 namespace cctest {
 

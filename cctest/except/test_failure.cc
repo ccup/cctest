@@ -1,4 +1,4 @@
-#include "cctest/core/test_failure.h"
+#include "cctest/except/test_failure.h"
 
 namespace cctest {
 

@@ -2,7 +2,7 @@
 #define HC9E8B8E2_729D_469F_8C91_90EF3791FC8E
 
 #include <vector>
-#include "cctest/core/test_failure.h"
+#include "cctest/except/test_failure.h"
 
 namespace cctest {
 

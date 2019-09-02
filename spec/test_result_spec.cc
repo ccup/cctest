@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "cctest/core/assertion_error.h"
+#include "cctest/except/assertion_error.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_case.h"
 

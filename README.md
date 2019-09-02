@@ -14,12 +14,12 @@ C/C++ are different languages from most modern ones. Writing tests for them has 
 ### Bazel
 
 ```bash
-$ bazel test //cctest/...
+$ bazel test //spec/...
 ```
 
 ### CMake
 
-If you install GoogleTest beforehand,
+If you install GoogleTest beforehand.
 
 ```bash
 $ mkdir build
@@ -35,7 +35,7 @@ If you don't install GoogleTest, cctest can download and build it by enabling `C
 $ cmake -DCCTEST_USE_GTEST=on ..
 ```
 
-If you don't want run test cases, you can close "CCTEST_RUN_TESTS"
+If you don't want run test cases, you can close "CCTEST_RUN_TESTS" option.
 
 ```bash
 $ cmake -DCCTEST_RUN_TESTS=off ..
