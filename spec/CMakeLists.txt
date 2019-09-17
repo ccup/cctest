@@ -60,3 +60,12 @@ cc_test(
   DEPS
     cctest::cctest
 )
+
+cc_test(
+  NAME
+    test_status_spec
+  SRCS
+    "test_status_spec.cc"
+  DEPS
+    cctest::cctest
+)

@@ -21,17 +21,9 @@ void TestResult::endTestCase(const Test& test) {
   BOARDCAST(endTestCase(test));
 }
 
-inline void TestResult::addFailure(TestFailure&& fail) {
-  failures.emplace_back(std::move(fail));
+void TestResult::addFailure(std::string&& msg, bool failure) {
+  failures.emplace_back(std::move(msg), failure);
   BOARDCAST(addFailure(failures.back()));
-}
-
-inline void TestResult::onFail(std::string&& msg) {
-  addFailure(TestFailure(std::move(msg), true));
-}
-
-inline void TestResult::onError(std::string&& msg) {
-  addFailure(TestFailure(std::move(msg), false));
 }
 
 namespace {
@@ -46,8 +38,8 @@ namespace {
   } const e;
 }
 
-#define ON_FAIL(except)  onFail(msg(except, f.where(), e.what()))
-#define ON_ERROR(except) onError(msg(except, f.where(), e.what()))
+#define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()), true)
+#define ON_ERROR(except) addFailure(msg(except, f.where(), e.what()), false)
 
 bool TestResult::protect(const TestCaseMethod& f) {
   try {

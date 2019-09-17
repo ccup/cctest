@@ -19,9 +19,7 @@ struct TestResult {
   bool protect(const TestCaseMethod&);
 
 private:
-  void onFail(std::string&& msg);
-  void onError(std::string&& msg);
-  void addFailure(TestFailure&&);
+  void addFailure(std::string&& msg, bool failure);
 
 private:
   std::vector<TestFailure> failures;
