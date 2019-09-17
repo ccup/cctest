@@ -1,18 +1,9 @@
-#include "cctest/core/test_fixture.h"
-#include "cctest/core/test_method.h"
-#include "cctest/core/test_suite.h"
-#include "cctest/core/test_result.h"
 #include "cctest/core/test_runner.h"
 #include "cctest/auto/auto_test_method.h"
 #include "cctest/listener/text/text_progress.h"
-#include "cctest/base/self.h"
-#include "cctest/base/singleton.h"
-#include "cctest/base/keywords.h"
 #include "gtest/gtest.h"
 #include <stack>
 #include <queue>
-#include <vector>
-#include <unordered_map>
 
 using namespace cctest;
 
