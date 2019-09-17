@@ -2,6 +2,7 @@
 #include "cctest/core/test_method.h"
 #include "cctest/core/test_suite.h"
 #include "cctest/core/test_result.h"
+#include "cctest/factory/test_factory.h"
 #include "cctest/listener/text/text_progress.h"
 #include "cctest/base/self.h"
 #include "cctest/base/singleton.h"
@@ -15,11 +16,6 @@
 using namespace cctest;
 
 namespace {
-
-struct TestFactory {
-  virtual Test* make() = 0;
-  virtual ~TestFactory() {}
-};
 
 struct TestSuiteFactory : TestFactory {
   void add(TestFactory&);
