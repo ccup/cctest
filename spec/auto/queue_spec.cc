@@ -1,45 +1,38 @@
-#include "cctest/auto/auto_test_method.h"
-#include "cctest/auto/auto_test_fixture.h"
+#define GTEST_DONT_DEFINE_TEST 1
 #include <gtest/gtest.h>
+
+#include "cctest/def/fixture_def.h"
+#include "cctest/def/test_def.h"
 #include <queue>
 
 using namespace cctest;
 
 namespace {
 
-struct QueueSpec;
-static AutoTestFixture<QueueSpec> suite2;
-
-struct QueueSpec : TestFixture {
+FIXTURE(QueueSpec) {
   std::queue<int> q;
 
-  void setUp() override {
+  SETUP {
     q.push(1);
     q.push(2);
   }
 
-  void apply_pop_0_time() {
+  TEST("apply pop 0 time") {
     ASSERT_EQ(1, q.front());
     ASSERT_EQ(2, q.back());
   }
 
-  AutoTestMethod m1 { 1, "apply_pop_0_time", &QueueSpec::apply_pop_0_time };
-
-  void apply_pop_1_time() {
+  TEST("apply pop 1 time") {
     q.pop();
     ASSERT_EQ(2, q.front());
     ASSERT_EQ(2, q.back());
   }
 
-  AutoTestMethod m2 { 2, "apply_pop_1_time", &QueueSpec::apply_pop_1_time };
-
-  void apply_pop_2_times() {
+  TEST("apply pop 2 times") {
     q.pop();
     q.pop();
     ASSERT_TRUE(q.empty());
   }
-
-  AutoTestMethod m3 { 3, "apply_pop_2_times", &QueueSpec::apply_pop_2_times };
 };
 
 } // namespace
