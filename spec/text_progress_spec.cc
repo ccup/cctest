@@ -1,4 +1,4 @@
-#include "cctest/listener/text_progress.h"
+#include "cctest/listener/text/text_progress.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_case.h"
 #include "cctest/core/test_suite.h"

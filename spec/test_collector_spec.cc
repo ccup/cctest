@@ -3,7 +3,7 @@
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_suite.h"
 #include "cctest/except/assertion_error.h"
-#include "cctest/listener/test_collector.h"
+#include "cctest/listener/collector/test_collector.h"
 
 using namespace cctest;
 

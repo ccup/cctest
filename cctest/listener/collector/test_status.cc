@@ -1,4 +1,4 @@
-#include "cctest/listener/test_status.h"
+#include "cctest/listener/collector/test_status.h"
 
 namespace cctest {
 

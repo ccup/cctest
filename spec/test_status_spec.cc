@@ -1,4 +1,4 @@
-#include "cctest/listener/test_status.h"
+#include "cctest/listener/collector/test_status.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_case.h"
 #include "cctest/except/assertion_error.h"

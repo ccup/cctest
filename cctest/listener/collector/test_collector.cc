@@ -1,4 +1,4 @@
-#include "cctest/listener/test_collector.h"
+#include "cctest/listener/collector/test_collector.h"
 #include "cctest/except/test_failure.h"
 
 namespace cctest {
