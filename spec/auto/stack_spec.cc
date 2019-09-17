@@ -2,7 +2,7 @@
 #include "cctest/core/test_method.h"
 #include "cctest/core/test_suite.h"
 #include "cctest/core/test_result.h"
-#include "cctest/factory/test_factory.h"
+#include "cctest/factory/test_suite_factory.h"
 #include "cctest/listener/text/text_progress.h"
 #include "cctest/base/self.h"
 #include "cctest/base/singleton.h"
@@ -16,28 +16,6 @@
 using namespace cctest;
 
 namespace {
-
-struct TestSuiteFactory : TestFactory {
-  void add(TestFactory&);
-
-protected:
-  Test* make() override;
-
-private:
-  std::vector<TestFactory*> factories;
-};
-
-void TestSuiteFactory::add(TestFactory &f) {
-  factories.push_back(&f);
-}
-
-Test* TestSuiteFactory::make() {
-  auto suite = new TestSuite;
-  for (auto f : factories) {
-    suite->add(f->make());
-  }
-  return suite;
-}
 
 template<typename Fixture>
 struct TestMethodFactory : TestFactory {
