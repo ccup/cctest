@@ -121,41 +121,52 @@ struct StackSpec : TestFixture {
   AutoTestMethod m3{3, "apply pop 2 times", &StackSpec::test3};
 };
 
-struct AutoStackSpec : testing::Test {
-protected:
-  AutoStackSpec() : progress(ss), root(suite()) {
-    result.addListener(progress);
-  }
+struct TestRunner {
+  TestRunner(TestListener&, TestFactory&);
+  ~TestRunner();
 
-  ~AutoStackSpec() {
-    delete root;
-  }
-
-protected:
-  void run() {
-    result.runRootTest(*root);
-  }
-
-  void assertOutput(const char* output) {
-    ASSERT_EQ(ss.str(), output);
-  }
+  void run();
 
 private:
-  static cctest::Test* suite() {
-    TestFactory& factory = TestMethodRegistry<StackSpec>::inst();
-    return factory.make();
-  }
-
-private:
-  std::ostringstream ss;
-  TextProgress progress;
-  cctest::Test* root;
   TestResult result;
+  Test *root;
 };
 
+TestRunner::TestRunner(TestListener &listener, TestFactory &factory)
+    : root(factory.make()) {
+  result.addListener(listener);
+}
+
+TestRunner::~TestRunner() {
+  delete root;
+}
+
+void TestRunner::run() {
+  result.runRootTest(*root);
+}
+
+template<typename Fixture>
+struct GenericAutoSpec: testing::Test {
+protected:
+  GenericAutoSpec() : progress(ss), runner(progress, factory()) {
+  }
+
+private:
+  static TestFactory& factory() {
+    return TestMethodRegistry<Fixture>::inst();
+  }
+
+protected:
+  std::ostringstream ss;
+  TextProgress progress;
+  TestRunner runner;
+};
+
+using AutoStackSpec = GenericAutoSpec<StackSpec>;
+
 TEST_F(AutoStackSpec, auto_register_test_cases) {
-  run();
-  assertOutput("starting...\n***\nend.\n");
+  runner.run();
+  ASSERT_EQ("starting...\n***\nend.\n", ss.str());
 }
 
 struct QueueSpec : TestFixture {
@@ -190,41 +201,11 @@ struct QueueSpec : TestFixture {
   AutoTestMethod m3 { 3, "apply_pop_2_times", &QueueSpec::apply_pop_2_times };
 };
 
-struct AutoQueueSpec : testing::Test {
-protected:
-  AutoQueueSpec() : progress(ss), root(suite()) {
-    result.addListener(progress);
-  }
-
-  ~AutoQueueSpec() {
-    delete root;
-  }
-
-protected:
-  void run() {
-    result.runRootTest(*root);
-  }
-
-  void assertOutput(const char* output) {
-    ASSERT_EQ(ss.str(), output);
-  }
-
-private:
-  static cctest::Test* suite() {
-    TestFactory& factory = TestMethodRegistry<QueueSpec>::inst();
-    return factory.make();
-  }
-
-private:
-  std::ostringstream ss;
-  TextProgress progress;
-  cctest::Test* root;
-  TestResult result;
-};
+using AutoQueueSpec = GenericAutoSpec<QueueSpec>;
 
 TEST_F(AutoQueueSpec, auto_register_test_cases) {
-  run();
-  assertOutput("starting...\n***\nend.\n");
+  runner.run();
+  ASSERT_EQ("starting...\n***\nend.\n", ss.str());
 }
 
 } // namespace
