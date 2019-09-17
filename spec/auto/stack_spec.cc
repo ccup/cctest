@@ -3,6 +3,7 @@
 #include "cctest/core/test_suite.h"
 #include "cctest/core/test_result.h"
 #include "cctest/factory/test_suite_factory.h"
+#include "cctest/factory/test_method_factory.h"
 #include "cctest/listener/text/text_progress.h"
 #include "cctest/base/self.h"
 #include "cctest/base/singleton.h"
@@ -16,22 +17,6 @@
 using namespace cctest;
 
 namespace {
-
-template<typename Fixture>
-struct TestMethodFactory : TestFactory {
-  TestMethodFactory(const char *name, Method<Fixture> method) :
-      name(name), method(method) {
-  }
-
-private:
-  Test* make() override {
-    return new TestMethod<Fixture>(method, name);
-  }
-
-private:
-  const char *name;
-  Method<Fixture> method;
-};
 
 template<typename Fixture>
 CCTEST_GENERIC_SINGLETON(TestMethodRegistry, Fixture) CCTEST_EXTENDS(TestSuiteFactory) {
