@@ -18,8 +18,6 @@ struct TestResult {
 
   bool protect(const TestCaseMethod&);
 
-  const std::vector<TestFailure>& getFailures() const;
-
 private:
   void onFail(std::string&& msg);
   void onError(std::string&& msg);

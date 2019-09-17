@@ -2,33 +2,36 @@
 #include "cctest/except/assertion_error.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_case.h"
+#include "cctest/listener/failure_list.h"
 #include "cctest/listener/test_collector.h"
 
 using namespace cctest;
 
 namespace {
 
-struct TestResultSpec : testing::Test {
+struct TestCaseSpec : testing::Test {
 protected:
-  void run(cctest::Test& test) {
+  void run(::Test& test) {
     test.run(result);
   }
 
 private:
   void SetUp() override {
     result.addListener(collector);
+    result.addListener(list);
   }
 
 protected:
+  FailureList list;
   TestCollector collector;
   TestResult result;
 };
 
-struct FailureOnRunTest : TestCase {
+struct FailureOnRunningTest : TestCase {
   const char* expectMsg() const {
     return "assertion fail in the runTest\n"
-           "product.cc:57\n"
-           "expected value == 2, but got 3";
+            "product.cc:57\n"
+            "expected value == 2, but got 3";
   }
 
 private:
@@ -37,23 +40,21 @@ private:
   }
 };
 
-TEST_F(TestResultSpec, throw_assertion_error_on_run_test) {
-  FailureOnRunTest test;
+TEST_F(TestCaseSpec, throw_assertion_error_on_run_test) {
+  FailureOnRunningTest test;
   run(test);
 
   ASSERT_EQ(1, collector.failCount());
 }
 
-TEST_F(TestResultSpec, assert_except_msg_on_running_test_failed) {
-  FailureOnRunTest test;
+TEST_F(TestCaseSpec, extract_except_msg_on_running_test_failed) {
+  FailureOnRunningTest test;
   run(test);
 
-  auto& fails = result.getFailures();
-  ASSERT_EQ(1, fails.size());
-
-  auto& fail = fails[0];
-  ASSERT_TRUE(fail.isFailure());
-  ASSERT_EQ(test.expectMsg(), fail.getExceptionMsg());
+  list.foreach([&test](const TestFailure& fail){
+    ASSERT_TRUE(fail.isFailure());
+    ASSERT_EQ(test.expectMsg(), fail.getExceptionMsg());
+  });
 }
 
 struct FailureOnSetUp : TestCase {
@@ -69,7 +70,7 @@ private:
   }
 };
 
-TEST_F(TestResultSpec, throw_assertion_error_on_setup) {
+TEST_F(TestCaseSpec, throw_assertion_error_on_setup) {
   FailureOnSetUp test;
   run(test);
 
@@ -83,7 +84,7 @@ struct FailureOnTearDown : TestCase {
   }
 };
 
-TEST_F(TestResultSpec, throw_assertion_error_on_tear_down) {
+TEST_F(TestCaseSpec, throw_assertion_error_on_tear_down) {
   FailureOnTearDown test;
   run(test);
   ASSERT_EQ(1, collector.failCount());
@@ -92,31 +93,28 @@ TEST_F(TestResultSpec, throw_assertion_error_on_tear_down) {
 struct ErrorOnRunningTest : TestCase {
   const char* expectMsg() const {
     return "uncaught std::exception in the runTest\n"
-           "std::exception";
+            "std::exception";
   }
 
-private:
   void runTest() override {
     throw std::exception();
   }
 };
 
-TEST_F(TestResultSpec, throw_std_exception_on_run_test) {
+TEST_F(TestCaseSpec, throw_std_exception_on_run_test) {
   ErrorOnRunningTest test;
   run(test);
   ASSERT_EQ(1, collector.errorCount());
 }
 
-TEST_F(TestResultSpec, extract_error_msgt_on_running_test_failed) {
+TEST_F(TestCaseSpec, extract_error_msgt_on_running_test_failed) {
   ErrorOnRunningTest test;
   run(test);
 
-  auto& errors = result.getFailures();
-  ASSERT_EQ(1, errors.size());
-
-  auto& error = errors[0];
-  ASSERT_FALSE(error.isFailure());
-  ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  list.foreach([&test](const TestFailure& error){
+    ASSERT_FALSE(error.isFailure());
+    ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  });
 }
 
 struct NilException {};
@@ -132,23 +130,20 @@ private:
   }
 };
 
-TEST_F(TestResultSpec, throw_unknown_exception_on_running_test) {
+TEST_F(TestCaseSpec, throw_unknown_exception_on_running_test) {
   UnknownErrorOnRunningTest test;
   run(test);
   ASSERT_EQ(1, collector.errorCount());
 }
 
-TEST_F(TestResultSpec, extract_unknown_error_msg_on_running_test_failed) {
+TEST_F(TestCaseSpec, extract_unknown_error_msg_on_running_test_failed) {
   UnknownErrorOnRunningTest test;
   run(test);
 
-  auto& errors = result.getFailures();
-  ASSERT_EQ(1, errors.size());
-
-  auto& error = errors[0];
-  ASSERT_FALSE(error.isFailure());
-  ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  list.foreach([&test](const TestFailure& error){
+    ASSERT_FALSE(error.isFailure());
+    ASSERT_EQ(test.expectMsg(), error.getExceptionMsg());
+  });
 }
-
 
 } // namespace

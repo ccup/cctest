@@ -10,11 +10,8 @@ void TestResult::addListener(TestListener& listener) {
   listeners.push_back(&listener);
 }
 
-const std::vector<TestFailure>& TestResult::getFailures() const {
-  return failures;
-}
-
-#define BOARDCAST(action) for (auto listener : listeners) listener->action
+#define BOARDCAST(action) \
+  for (auto listener : listeners) listener->action
 
 void TestResult::startTestCase(const Test& test) {
   BOARDCAST(startTestCase(test));

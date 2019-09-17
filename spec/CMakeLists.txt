@@ -51,3 +51,12 @@ cc_test(
   DEPS
     cctest::cctest
 )
+
+cc_test(
+  NAME
+    failure_list_spec
+  SRCS
+    "failure_list_spec.cc"
+  DEPS
+    cctest::cctest
+)
