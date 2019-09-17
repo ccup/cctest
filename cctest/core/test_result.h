@@ -3,23 +3,24 @@
 
 #include <vector>
 #include "cctest/except/test_failure.h"
+#include "cctest/core/internal/test_case_protector.h"
 
 namespace cctest {
 
 struct Test;
 struct TestListener;
-struct TestCaseMethod;
+struct BareTestCase;
 
-struct TestResult {
+struct TestResult : private TestCaseProtector {
   void addListener(TestListener& listener);
 
   void startTestRun(const Test& test);
   void endTestRun(const Test& test);
 
-  void startTestCase(const Test&);
-  void endTestCase(const Test&);
+  void runTestCase(BareTestCase&);
 
-  bool protect(const TestCaseMethod&);
+private:
+  bool protect(const TestCaseMethod&) override;
 
 private:
   void addFailure(std::string&& msg, bool failure);

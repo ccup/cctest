@@ -1,9 +1,9 @@
 #include "cctest/core/test_result.h"
 #include "cctest/core/test.h"
 #include "cctest/core/test_listener.h"
-#include "cctest/core/internal/test_case_method.h"
 #include "cctest/except/assertion_error.h"
-#include <algorithm>
+#include "cctest/core/internal/test_case_method.h"
+#include "cctest/core/internal/bare_test_case.h"
 
 namespace cctest {
 
@@ -22,12 +22,10 @@ void TestResult::endTestRun(const Test& test) {
   BOARDCAST(endTestRun(test));
 }
 
-void TestResult::startTestCase(const Test& test) {
-  BOARDCAST(startTestCase(test));
-}
-
-void TestResult::endTestCase(const Test& test) {
-  BOARDCAST(endTestCase(test));
+void TestResult::runTestCase(BareTestCase& test) {
+  BOARDCAST(startTestCase(test.get()));
+  test.runBare(*this);
+  BOARDCAST(endTestCase(test.get()));
 }
 
 void TestResult::addFailure(std::string&& msg, bool failure) {

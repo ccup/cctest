@@ -3,15 +3,20 @@
 
 #include "cctest/core/test.h"
 #include "cctest/core/test_fixture.h"
+#include "cctest/core/internal/bare_test_case.h"
 
 namespace cctest {
 
 // clang bugs: should be private.
-struct TestCase : Test, protected TestFixture {
+struct TestCase : Test, protected TestFixture, private BareTestCase {
   using Test::Test;
 
 private:
   void run(TestResult& result) override;
+
+private:
+  const Test& get() const override;
+  void runBare(TestCaseProtector&) override;
 
 private:
   virtual void runTest() {}
