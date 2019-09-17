@@ -17,7 +17,9 @@ protected:
   }
 
   void run(cctest::Test& test) {
-    result.runRootTest(test);
+    result.startTestRun(test);
+    test.run(result);
+    result.endTestRun(test);
   }
 
   void assertOutput(const char* output) {

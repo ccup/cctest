@@ -13,7 +13,8 @@ struct TestCaseMethod;
 struct TestResult {
   void addListener(TestListener& listener);
 
-  void runRootTest(Test&);
+  void startTestRun(const Test& test);
+  void endTestRun(const Test& test);
 
   void startTestCase(const Test&);
   void endTestCase(const Test&);

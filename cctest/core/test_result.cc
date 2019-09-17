@@ -14,9 +14,11 @@ void TestResult::addListener(TestListener& listener) {
 #define BOARDCAST(action) \
   for (auto listener : listeners) listener->action
 
-void TestResult::runRootTest(Test& test) {
+void TestResult::startTestRun(const Test& test) {
   BOARDCAST(startTestRun(test));
-  test.run(*this);
+}
+
+void TestResult::endTestRun(const Test& test) {
   BOARDCAST(endTestRun(test));
 }
 
