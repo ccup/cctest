@@ -1,19 +1,19 @@
 #include "cctest/core/test_result.h"
-#include "cctest/except/assertion_error.h"
+#include "cctest/core/test_listener.h"
 #include "cctest/core/internal/test_case_method.h"
+#include "cctest/except/assertion_error.h"
 #include <algorithm>
 
 namespace cctest {
 
-TestResult::TestResult() : numOfRuns(0) {
+void TestResult::addListener(TestListener& listener) {
+  listeners.push_back(&listener);
 }
 
-void TestResult::startTestCase() {
-  numOfRuns++;
-}
-
-int TestResult::runCount() const {
-  return numOfRuns;
+void TestResult::startTestCase(const Test& test) {
+  for (auto listener : listeners) {
+    listener->startTestCase(test);
+  }
 }
 
 int TestResult::failCount() const {
@@ -39,18 +39,16 @@ inline void TestResult::addError(std::string&& msg) {
 }
 
 namespace {
-
-inline std::string msg(const char* why, const char* where, const char* what) {
-  return std::string(why) + ' ' + where + '\n' + what;
-}
-
-struct NilException {
-  const char* what() const {
-    return "";
+  inline std::string msg(const char* why, const char* where, const char* what) {
+    return std::string(why) + ' ' + where + '\n' + what;
   }
-} const e;
 
-} // namespace
+  struct NilException {
+    const char* what() const {
+      return "";
+    }
+  } const e;
+}
 
 #define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()))
 #define ON_ERROR(except) addError(msg(except, f.where(), e.what()))

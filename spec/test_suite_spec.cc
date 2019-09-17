@@ -2,6 +2,7 @@
 #include "cctest/core/test_case.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_suite.h"
+#include "cctest/listener/test_collector.h"
 
 using namespace cctest;
 
@@ -20,10 +21,16 @@ protected:
     suite.add(factory());
 
     run(suite);
-    ASSERT_EQ(2, result.runCount());
+    ASSERT_EQ(2, collector.runCount());
+  }
+
+private:
+  void SetUp() override {
+    result.addListener(collector);
   }
 
 protected:
+  TestCollector collector;
   TestResult result;
   TestSuite suite;
 };

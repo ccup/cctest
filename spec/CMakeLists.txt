@@ -42,3 +42,12 @@ cc_test(
   DEPS
     cctest::cctest
 )
+
+cc_test(
+  NAME
+    test_collector_spec
+  SRCS
+    "test_collector_spec.cc"
+  DEPS
+    cctest::cctest
+)

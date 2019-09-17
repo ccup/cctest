@@ -6,13 +6,14 @@
 
 namespace cctest {
 
+struct Test;
+struct TestListener;
 struct TestCaseMethod;
 
 struct TestResult {
-  TestResult();
+  void addListener(TestListener& listener);
 
-  void startTestCase();
-  int runCount() const;
+  void startTestCase(const Test&);
 
   int failCount() const;
   int errorCount() const;
@@ -26,8 +27,8 @@ private:
   void addError(std::string&& msg);
 
 private:
-  int numOfRuns;
   std::vector<TestFailure> failures;
+  std::vector<TestListener*> listeners;
 };
 
 } // namespace cctest

@@ -44,20 +44,4 @@ TEST(NamedTestCase, named_test_case) {
   ASSERT_EQ("test case", test.getName());
 }
 
-struct TestCaseResult : testing::Test {
-protected:
-  void run(cctest::Test& test) {
-    test.run(result);
-  }
-
-protected:
-  TestResult result;
-};
-
-TEST_F(TestCaseResult, run_one_simple_test) {
-  TestCase test;
-  run(test);
-  ASSERT_EQ(1, result.runCount());
-}
-
 } // namespace
