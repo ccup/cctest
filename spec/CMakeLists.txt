@@ -78,3 +78,12 @@ cc_test(
   DEPS
     cctest::cctest
 )
+
+cc_test(
+  NAME
+    time_collector_spec
+  SRCS
+    "time_collector_spec.cc"
+  DEPS
+    cctest::cctest
+)

@@ -10,6 +10,9 @@ struct TestListener {
   virtual void startTestRun(const Test&) {}
   virtual void endTestRun(const Test&) {}
 
+  virtual void startTestSuite(const Test&) {}
+  virtual void endTestSuite(const Test&) {}
+
   virtual void startTestCase(const Test&) {}
   virtual void endTestCase(const Test&) {}
 
