@@ -3,6 +3,11 @@
 
 namespace cctest {
 
+TestSuiteFactory& TestSuiteFactory::root() {
+  static TestSuiteFactory inst;
+  return inst;
+}
+
 void TestSuiteFactory::add(TestFactory &f) {
   factories.push_back(&f);
 }

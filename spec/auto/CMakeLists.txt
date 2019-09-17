@@ -4,5 +4,16 @@ cc_test(
   SRCS
     stack_spec.cc
   DEPS
-    cctest::cctest
+    cctest_main
+    cctest
+)
+
+cc_test(
+  NAME
+    queue_spec
+  SRCS
+    queue_spec.cc
+  DEPS
+    cctest_main  
+    cctest
 )

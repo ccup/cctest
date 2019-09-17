@@ -3,7 +3,7 @@
 
 namespace cctest {
 
-int run_all_tests(int argc, char** argv);
+void run_all_tests(int argc, char** argv);
 
 } // namespace cctest
 

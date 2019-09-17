@@ -1,5 +1,8 @@
 #include "cctest/main/startup.h"
+#include <gtest/gtest.h>
 
 int main(int argc, char** argv) {
-  return cctest::run_all_tests(argc, argv);
+  testing::InitGoogleTest(&argc, argv);
+  cctest::run_all_tests(argc, argv);
+  return RUN_ALL_TESTS();
 }

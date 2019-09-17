@@ -9,6 +9,8 @@ namespace cctest {
 struct TestSuiteFactory : TestFactory {
   void add(TestFactory&);
 
+  static TestSuiteFactory& root();
+
 protected:
   Test* make() override;
 
