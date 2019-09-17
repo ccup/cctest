@@ -69,3 +69,12 @@ cc_test(
   DEPS
     cctest::cctest
 )
+
+cc_test(
+  NAME
+    text_progress_spec
+  SRCS
+    "text_progress_spec.cc"
+  DEPS
+    cctest::cctest
+)

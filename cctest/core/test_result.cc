@@ -1,4 +1,5 @@
 #include "cctest/core/test_result.h"
+#include "cctest/core/test.h"
 #include "cctest/core/test_listener.h"
 #include "cctest/core/internal/test_case_method.h"
 #include "cctest/except/assertion_error.h"
@@ -12,6 +13,12 @@ void TestResult::addListener(TestListener& listener) {
 
 #define BOARDCAST(action) \
   for (auto listener : listeners) listener->action
+
+void TestResult::runRootTest(Test& test) {
+  BOARDCAST(startTestRun(test));
+  test.run(*this);
+  BOARDCAST(endTestRun(test));
+}
 
 void TestResult::startTestCase(const Test& test) {
   BOARDCAST(startTestCase(test));
