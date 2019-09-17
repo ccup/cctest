@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "cctest/core/test_case.h"
 #include "cctest/core/test_result.h"
+#include "cctest/except/assertion_error.h"
 #include "cctest/listener/test_collector.h"
 
 using namespace cctest;

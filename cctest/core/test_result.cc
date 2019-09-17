@@ -16,14 +16,10 @@ void TestResult::startTestCase(const Test& test) {
   }
 }
 
-int TestResult::failCount() const {
-  return std::count_if(failures.begin(), failures.end(), [](const TestFailure& f) {
-    return f.isFailure();
-  });
-}
-
 int TestResult::errorCount() const {
-  return failures.size() - failCount();
+  return std::count_if(failures.begin(), failures.end(), [](const TestFailure& f) {
+    return !f.isFailure();
+  });
 }
 
 const std::vector<TestFailure>& TestResult::getFailures() const {
@@ -32,10 +28,16 @@ const std::vector<TestFailure>& TestResult::getFailures() const {
 
 inline void TestResult::addFailure(std::string&& msg) {
   failures.emplace_back(std::move(msg), true);
+  for (auto listener : listeners) {
+    listener->addFailure(failures.back());
+  }
 }
 
 inline void TestResult::addError(std::string&& msg) {
   failures.emplace_back(std::move(msg), false);
+  for (auto listener : listeners) {
+    listener->addFailure(failures.back());
+  }
 }
 
 namespace {

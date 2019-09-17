@@ -2,6 +2,7 @@
 #include "cctest/except/assertion_error.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_case.h"
+#include "cctest/listener/test_collector.h"
 
 using namespace cctest;
 
@@ -13,7 +14,13 @@ protected:
     test.run(result);
   }
 
+private:
+  void SetUp() override {
+    result.addListener(collector);
+  }
+
 protected:
+  TestCollector collector;
   TestResult result;
 };
 
@@ -34,7 +41,7 @@ TEST_F(TestResultSpec, throw_assertion_error_on_run_test) {
   FailureOnRunTest test;
   run(test);
 
-  ASSERT_EQ(1, result.failCount());
+  ASSERT_EQ(1, collector.failCount());
 }
 
 TEST_F(TestResultSpec, assert_except_msg_on_running_test_failed) {
@@ -66,7 +73,7 @@ TEST_F(TestResultSpec, throw_assertion_error_on_setup) {
   FailureOnSetUp test;
   run(test);
 
-  ASSERT_EQ(1, result.failCount());
+  ASSERT_EQ(1, collector.failCount());
   ASSERT_FALSE(test.wasRun);
 }
 
@@ -79,7 +86,7 @@ struct FailureOnTearDown : TestCase {
 TEST_F(TestResultSpec, throw_assertion_error_on_tear_down) {
   FailureOnTearDown test;
   run(test);
-  ASSERT_EQ(1, result.failCount());
+  ASSERT_EQ(1, collector.failCount());
 }
 
 struct ErrorOnRunningTest : TestCase {
