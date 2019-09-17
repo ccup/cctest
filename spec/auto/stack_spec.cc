@@ -8,19 +8,48 @@
 #include "cctest/base/keywords.h"
 #include "gtest/gtest.h"
 #include <stack>
+#include <vector>
 #include <unordered_map>
 
 using namespace cctest;
 
 namespace {
 
+struct TestFactory {
+  virtual Test* make() = 0;
+  virtual ~TestFactory() {}
+};
+
+struct TestSuiteFactory : TestFactory {
+  void add(TestFactory&);
+
+protected:
+  Test* make() override;
+
+private:
+  std::vector<TestFactory*> factories;
+};
+
+void TestSuiteFactory::add(TestFactory &f) {
+  factories.push_back(&f);
+}
+
+Test* TestSuiteFactory::make() {
+  auto suite = new TestSuite;
+  for (auto f : factories) {
+    suite->add(f->make());
+  }
+  return suite;
+}
+
 template<typename Fixture>
-struct TestMethodFactory {
+struct TestMethodFactory : TestFactory {
   TestMethodFactory(const char *name, Method<Fixture> method) :
       name(name), method(method) {
   }
 
-  Test* make() {
+private:
+  Test* make() override {
     return new TestMethod<Fixture>(method, name);
   }
 
@@ -30,29 +59,23 @@ private:
 };
 
 template<typename Fixture>
-CCTEST_GENERIC_SINGLETON(TestMethodRegistry, Fixture) {
+CCTEST_GENERIC_SINGLETON(TestMethodRegistry, Fixture) CCTEST_EXTENDS(TestSuiteFactory) {
   void add(int id, const char *name, Method<Fixture> method) {
     if (!exist(id)) {
       registry.insert({id, {name, method}});
+      TestSuiteFactory::add(registry.at(id));
     }
   }
 
-  Test* make() {
+private:
+  Test* make() override {
     static Fixture dummy; // register all test methods to this.
-    return suite();
+    return TestSuiteFactory::make();
   }
 
 private:
   bool exist(int id) const {
     return registry.find(id) != registry.end();
-  }
-
-  Test* suite() {
-    auto result = new TestSuite;
-    for (auto &i : registry) {
-      result->add(i.second.make());
-    }
-    return result;
   }
 
 private:
@@ -118,7 +141,8 @@ protected:
 
 private:
   static cctest::Test* suite() {
-    return TestMethodRegistry<StackSpec>::inst().make();
+    TestFactory& factory = TestMethodRegistry<StackSpec>::inst();
+    return factory.make();
   }
 
 private:
