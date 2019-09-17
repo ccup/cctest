@@ -1,0 +1,23 @@
+cc_test(
+  name = "stack_spec",
+  srcs = [
+    "stack_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "@com_github_google_googletest//:gtest",
+    "@com_github_google_googletest//:gtest_main",    
+  ],
+)
+
+cc_test(
+  name = "queue_spec",
+  srcs = [
+    "queue_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "@com_github_google_googletest//:gtest",
+    "@com_github_google_googletest//:gtest_main",    
+  ],
+)
