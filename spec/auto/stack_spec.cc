@@ -2,7 +2,8 @@
 #include "cctest/core/test_method.h"
 #include "cctest/core/test_suite.h"
 #include "cctest/core/test_result.h"
-#include "cctest/factory/test_method_registry.h"
+#include "cctest/core/test_runner.h"
+#include "cctest/auto/auto_test_method.h"
 #include "cctest/listener/text/text_progress.h"
 #include "cctest/base/self.h"
 #include "cctest/base/singleton.h"
@@ -16,14 +17,6 @@
 using namespace cctest;
 
 namespace {
-
-struct AutoTestMethod {
-  template <typename Fixture>
-  AutoTestMethod(int id, const char* name, Method<Fixture> method) {
-    auto& registry = TestMethodRegistry<Fixture>::inst();
-    registry.add(id, name, method);
-  }
-};
 
 struct StackSpec : TestFixture {
   std::stack<int> v;
@@ -54,30 +47,6 @@ struct StackSpec : TestFixture {
 
   AutoTestMethod m3{3, "apply pop 2 times", &StackSpec::test3};
 };
-
-struct TestRunner {
-  TestRunner(TestListener&, TestFactory&);
-  ~TestRunner();
-
-  void run();
-
-private:
-  TestResult result;
-  Test *root;
-};
-
-TestRunner::TestRunner(TestListener &listener, TestFactory &factory)
-    : root(factory.make()) {
-  result.addListener(listener);
-}
-
-TestRunner::~TestRunner() {
-  delete root;
-}
-
-void TestRunner::run() {
-  result.runRootTest(*root);
-}
 
 template<typename Fixture>
 struct GenericAutoSpec: testing::Test {
