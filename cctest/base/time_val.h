@@ -2,7 +2,7 @@
 #define H7B512A87_3C48_47F0_8D5E_0CE9AA25B6A0
 
 #include <sys/time.h>
-#include "cctest/util/struct_wrapper.h"
+#include "cctest/base/struct_wrapper.h"
 
 namespace cctest {
 

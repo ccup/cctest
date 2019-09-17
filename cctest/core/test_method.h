@@ -2,37 +2,33 @@
 #define HBC36D615_D4BB_449A_9829_16E8CE8EC076
 
 #include "cctest/core/test_case.h"
+#include "cctest/core/method.h"
 
 namespace cctest {
 
 template <typename Fixture>
 struct TestMethod : TestCase {
-private:
-  using Method = void(Fixture::*)();
-
-public:
-  TestMethod(Method method) : method(method) {
-  }
+  TestMethod(Method<Fixture> method, const char* name = "")
+    : TestCase(name), method(method) {}
 
 private:
   void setUp() override {
-    self = fixture = new Fixture;
+    self = new Fixture;
     self->setUp();
   }
 
   void runTest() override {
-    (fixture->*method)();
+    (self->*method)();
   }
 
   void tearDown() override {
     self->tearDown();
-    delete fixture;
+    delete self;
   }
 
 private:
-  Fixture* fixture = nullptr;
-  TestFixture* self = nullptr;
-  Method method;
+  Fixture* self = nullptr;
+  Method<Fixture> method;
 };
 
 } // namespace cctest

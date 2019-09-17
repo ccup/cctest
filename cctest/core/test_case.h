@@ -7,8 +7,7 @@
 
 namespace cctest {
 
-// clang bugs: should be private.
-struct TestCase : Test, protected TestFixture, private BareTestCase {
+struct TestCase : Test, private TestFixture, private BareTestCase {
   using Test::Test;
 
 private:

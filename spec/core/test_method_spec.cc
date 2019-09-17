@@ -13,22 +13,21 @@ struct WasRun : TestFixture {
     result.clear();
   }
 
-  void expectResult(const std::string& expected) {
-    run(method);
-    ASSERT_EQ(expected, result);
+  void setUp() override {
+    result += "[setUp]";
   }
 
   void testMethod() {
     result += "[runTest]";
   }
 
-private:
-  void setUp() override {
-    result += "[setUp]";
-  }
-
   void tearDown() override {
     result += "[tearDown]";
+  }
+
+  void expectResult(const std::string& expected) {
+    run(method);
+    ASSERT_EQ(expected, result);
   }
 
 private:

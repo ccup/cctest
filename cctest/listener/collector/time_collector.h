@@ -2,7 +2,7 @@
 #define H6BB49081_B0D8_4907_B529_6551096153DD
 
 #include "cctest/core/test_listener.h"
-#include "cctest/util/time_val.h"
+#include "cctest/base/time_val.h"
 #include <stack>
 
 namespace cctest {

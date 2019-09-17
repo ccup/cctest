@@ -1,5 +1,6 @@
 #include "cctest/core/test_case.h"
 #include "cctest/core/test_result.h"
+#include "cctest/core/method.h"
 #include "cctest/core/internal/test_case_method.h"
 #include "cctest/except/assertion_error.h"
 
@@ -8,9 +9,7 @@ namespace cctest {
 namespace {
 
 struct Functor : TestCaseMethod {
-  using Method = void(TestCase::*)();
-
-  Functor(TestCase* self, Method method, const char* place)
+  Functor(TestCase* self, Method<TestCase> method, const char* place)
     : self(self), method(method), place(place) {
   }
 
@@ -26,7 +25,7 @@ private:
 
 private:
   TestCase* self;
-  Method method;
+  Method<TestCase> method;
   const char* place;
 };
 
