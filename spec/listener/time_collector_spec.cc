@@ -19,7 +19,7 @@ protected:
   }
 
   void assertTime(const TimeVal& val) {
-    timeval max{0, 100};  // 100 us
+    timeval max{0, 1000};  // 1000 us
     ASSERT_LT(val, TimeVal::by(max));
   }
 
