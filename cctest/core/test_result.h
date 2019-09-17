@@ -15,9 +15,7 @@ struct BareTestSuite;
 struct TestResult : private TestCaseProtector {
   void addListener(TestListener& listener);
 
-  void startTestRun(const Test& test);
-  void endTestRun(const Test& test);
-
+  void runRootTest(Test&);
   void runTestCase(BareTestCase&);
   void runTestSuite(BareTestSuite&);
 

@@ -1,10 +1,10 @@
 #include "cctest/core/test_result.h"
 #include "cctest/core/test.h"
 #include "cctest/core/test_listener.h"
-#include "cctest/except/assertion_error.h"
 #include "cctest/core/internal/test_case_method.h"
 #include "cctest/core/internal/bare_test_case.h"
 #include "cctest/core/internal/bare_test_suite.h"
+#include "cctest/except/assertion_error.h"
 
 namespace cctest {
 
@@ -15,11 +15,9 @@ void TestResult::addListener(TestListener& listener) {
 #define BOARDCAST(action) \
   for (auto listener : listeners) listener->action
 
-void TestResult::startTestRun(const Test& test) {
+void TestResult::runRootTest(Test& test) {
   BOARDCAST(startTestRun(test));
-}
-
-void TestResult::endTestRun(const Test& test) {
+  test.run(*this);
   BOARDCAST(endTestRun(test));
 }
 
