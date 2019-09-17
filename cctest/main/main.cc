@@ -1,4 +1,4 @@
-#include "cctest/main/startup.h"
+#include "cctest/cctest.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char** argv) {
