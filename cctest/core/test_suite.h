@@ -3,10 +3,11 @@
 
 #include <vector>
 #include "cctest/core/test.h"
+#include "cctest/core/internal/bare_test_suite.h"
 
 namespace cctest {
 
-struct TestSuite : Test {
+struct TestSuite : Test, private BareTestSuite {
   using Test::Test;
   ~TestSuite() override;
 
@@ -14,6 +15,10 @@ struct TestSuite : Test {
 
 private:
   void run(TestResult& result) override;
+
+private:
+  const Test& get() const override;
+  void runBare(TestResult&) override;
 
 private:
   std::vector<Test*> tests;

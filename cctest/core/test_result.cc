@@ -4,6 +4,7 @@
 #include "cctest/except/assertion_error.h"
 #include "cctest/core/internal/test_case_method.h"
 #include "cctest/core/internal/bare_test_case.h"
+#include "cctest/core/internal/bare_test_suite.h"
 
 namespace cctest {
 
@@ -26,6 +27,12 @@ void TestResult::runTestCase(BareTestCase& test) {
   BOARDCAST(startTestCase(test.get()));
   test.runBare(*this);
   BOARDCAST(endTestCase(test.get()));
+}
+
+void TestResult::runTestSuite(BareTestSuite& test) {
+  BOARDCAST(startTestSuite(test.get()));
+  test.runBare(*this);
+  BOARDCAST(endTestSuite(test.get()));
 }
 
 void TestResult::addFailure(std::string&& msg, bool failure) {

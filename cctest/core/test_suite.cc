@@ -1,4 +1,5 @@
 #include "cctest/core/test_suite.h"
+#include "cctest/core/test_result.h"
 
 namespace cctest {
 
@@ -13,9 +14,17 @@ void TestSuite::add(Test* test) {
 }
 
 void TestSuite::run(TestResult& result) {
+  result.runTestSuite(*this);
+}
+
+void TestSuite::runBare(TestResult& result) {
   for (auto test : tests) {
     test->run(result);
-  }
+  };
+}
+
+const Test& TestSuite::get() const {
+  return *this;
 }
 
 } // namespace cctest

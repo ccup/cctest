@@ -10,6 +10,7 @@ namespace cctest {
 struct Test;
 struct TestListener;
 struct BareTestCase;
+struct BareTestSuite;
 
 struct TestResult : private TestCaseProtector {
   void addListener(TestListener& listener);
@@ -18,6 +19,7 @@ struct TestResult : private TestCaseProtector {
   void endTestRun(const Test& test);
 
   void runTestCase(BareTestCase&);
+  void runTestSuite(BareTestSuite&);
 
 private:
   bool protect(const TestCaseMethod&) override;
