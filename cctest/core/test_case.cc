@@ -45,6 +45,7 @@ void TestCase::runBare(TestResult& result) {
 void TestCase::run(TestResult& result) {
   result.startTestCase(*this);
   runBare(result);
+  result.endTestCase(*this);
 }
 
 } // namespace cctest

@@ -10,38 +10,35 @@ void TestResult::addListener(TestListener& listener) {
   listeners.push_back(&listener);
 }
 
-void TestResult::startTestCase(const Test& test) {
-  for (auto listener : listeners) {
-    listener->startTestCase(test);
-  }
-}
-
-int TestResult::errorCount() const {
-  return std::count_if(failures.begin(), failures.end(), [](const TestFailure& f) {
-    return !f.isFailure();
-  });
-}
-
 const std::vector<TestFailure>& TestResult::getFailures() const {
   return failures;
 }
 
-inline void TestResult::addFailure(std::string&& msg) {
-  failures.emplace_back(std::move(msg), true);
-  for (auto listener : listeners) {
-    listener->addFailure(failures.back());
-  }
+#define BOARDCAST(action) for (auto listener : listeners) listener->action
+
+void TestResult::startTestCase(const Test& test) {
+  BOARDCAST(startTestCase(test));
 }
 
-inline void TestResult::addError(std::string&& msg) {
-  failures.emplace_back(std::move(msg), false);
-  for (auto listener : listeners) {
-    listener->addFailure(failures.back());
-  }
+void TestResult::endTestCase(const Test& test) {
+  BOARDCAST(endTestCase(test));
+}
+
+inline void TestResult::addFailure(TestFailure&& fail) {
+  failures.emplace_back(std::move(fail));
+  BOARDCAST(addFailure(failures.back()));
+}
+
+inline void TestResult::onFail(std::string&& msg) {
+  addFailure(TestFailure(std::move(msg), true));
+}
+
+inline void TestResult::onError(std::string&& msg) {
+  addFailure(TestFailure(std::move(msg), false));
 }
 
 namespace {
-  inline std::string msg(const char* why, const char* where, const char* what) {
+  std::string msg(const char* why, const char* where, const char* what) {
     return std::string(why) + ' ' + where + '\n' + what;
   }
 
@@ -52,8 +49,8 @@ namespace {
   } const e;
 }
 
-#define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()))
-#define ON_ERROR(except) addError(msg(except, f.where(), e.what()))
+#define ON_FAIL(except)  onFail(msg(except, f.where(), e.what()))
+#define ON_ERROR(except) onError(msg(except, f.where(), e.what()))
 
 bool TestResult::protect(const TestCaseMethod& f) {
   try {
@@ -67,5 +64,6 @@ bool TestResult::protect(const TestCaseMethod& f) {
   }
   return false;
 }
+
 
 } // namespace cctest

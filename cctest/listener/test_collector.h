@@ -10,14 +10,20 @@ struct TestCollector : TestListener {
 
   int runCount() const;
   int failCount() const;
+  int errorCount() const;
+  int passCount() const;
 
 private:
   void startTestCase(const Test&) override;
+  void endTestCase(const Test&) override;
   void addFailure(const TestFailure&) override;
 
 private:
   int numOfRuns;
   int numOfFails;
+  int numOfErrors;
+  int numOfPassed;
+  bool lastFailed;
 };
 
 } // namespace cctest

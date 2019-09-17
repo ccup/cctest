@@ -8,6 +8,7 @@ struct TestFailure;
 
 struct TestListener {
   virtual void startTestCase(const Test&) {}
+  virtual void endTestCase(const Test&) {}
   virtual void addFailure(const TestFailure&) {}
   virtual ~TestListener() {}
 };

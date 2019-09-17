@@ -104,7 +104,7 @@ private:
 TEST_F(TestResultSpec, throw_std_exception_on_run_test) {
   ErrorOnRunningTest test;
   run(test);
-  ASSERT_EQ(1, result.errorCount());
+  ASSERT_EQ(1, collector.errorCount());
 }
 
 TEST_F(TestResultSpec, extract_error_msgt_on_running_test_failed) {
@@ -135,7 +135,7 @@ private:
 TEST_F(TestResultSpec, throw_unknown_exception_on_running_test) {
   UnknownErrorOnRunningTest test;
   run(test);
-  ASSERT_EQ(1, result.errorCount());
+  ASSERT_EQ(1, collector.errorCount());
 }
 
 TEST_F(TestResultSpec, extract_unknown_error_msg_on_running_test_failed) {
