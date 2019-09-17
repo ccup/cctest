@@ -8,6 +8,7 @@
 #include "cctest/base/keywords.h"
 #include "gtest/gtest.h"
 #include <stack>
+#include <queue>
 #include <vector>
 #include <unordered_map>
 
@@ -153,6 +154,75 @@ private:
 };
 
 TEST_F(AutoStackSpec, auto_register_test_cases) {
+  run();
+  assertOutput("starting...\n***\nend.\n");
+}
+
+struct QueueSpec : TestFixture {
+  std::queue<int> q;
+
+  void setUp() override {
+    q.push(1);
+    q.push(2);
+  }
+
+  void apply_pop_0_time() {
+    ASSERT_EQ(1, q.front());
+    ASSERT_EQ(2, q.back());
+  }
+
+  AutoTestMethod m1 { 1, "apply_pop_0_time", &QueueSpec::apply_pop_0_time };
+
+  void apply_pop_1_time() {
+    q.pop();
+    ASSERT_EQ(2, q.front());
+    ASSERT_EQ(2, q.back());
+  }
+
+  AutoTestMethod m2 { 2, "apply_pop_1_time", &QueueSpec::apply_pop_1_time };
+
+  void apply_pop_2_times() {
+    q.pop();
+    q.pop();
+    ASSERT_TRUE(q.empty());
+  }
+
+  AutoTestMethod m3 { 3, "apply_pop_2_times", &QueueSpec::apply_pop_2_times };
+};
+
+struct AutoQueueSpec : testing::Test {
+protected:
+  AutoQueueSpec() : progress(ss), root(suite()) {
+    result.addListener(progress);
+  }
+
+  ~AutoQueueSpec() {
+    delete root;
+  }
+
+protected:
+  void run() {
+    result.runRootTest(*root);
+  }
+
+  void assertOutput(const char* output) {
+    ASSERT_EQ(ss.str(), output);
+  }
+
+private:
+  static cctest::Test* suite() {
+    TestFactory& factory = TestMethodRegistry<QueueSpec>::inst();
+    return factory.make();
+  }
+
+private:
+  std::ostringstream ss;
+  TextProgress progress;
+  cctest::Test* root;
+  TestResult result;
+};
+
+TEST_F(AutoQueueSpec, auto_register_test_cases) {
   run();
   assertOutput("starting...\n***\nend.\n");
 }
