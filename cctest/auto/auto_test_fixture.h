@@ -8,9 +8,9 @@ namespace cctest {
 
 template<typename Fixture>
 struct AutoTestFixture {
-  AutoTestFixture(const char* name = "") {
+  AutoTestFixture(const char* name) {
     auto &root = TestSuiteFactory::root();
-    auto &leaf = TestMethodRegistry<Fixture>::inst();
+    auto &leaf = TestMethodRegistry<Fixture>::inst(name);
     root.add(leaf);
   }
 };

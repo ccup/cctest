@@ -10,7 +10,14 @@
 namespace cctest {
 
 template<typename Fixture>
-CCTEST_GENERIC_SINGLETON(TestMethodRegistry, Fixture) CCTEST_EXTENDS(TestSuiteFactory) {
+struct TestMethodRegistry : TestSuiteFactory {
+  using TestSuiteFactory::TestSuiteFactory;
+
+  static TestMethodRegistry<Fixture>& inst(const char* name = "") {
+    static TestMethodRegistry<Fixture> registry(name);
+    return registry;
+  }
+
   void add(int id, const char *name, Method<Fixture> method) {
     if (!exist(id)) {
       registry.insert({id, {name, method}});

@@ -3,8 +3,11 @@
 
 namespace cctest {
 
+TestSuiteFactory::TestSuiteFactory(std::string name)
+  : name(std::move(name)) {}
+
 TestSuiteFactory& TestSuiteFactory::root() {
-  static TestSuiteFactory inst;
+  static TestSuiteFactory inst("All Tests");
   return inst;
 }
 
@@ -13,7 +16,7 @@ void TestSuiteFactory::add(TestFactory &f) {
 }
 
 Test* TestSuiteFactory::make() {
-  auto suite = new TestSuite;
+  auto suite = new TestSuite(name);
   for (auto f : factories) {
     suite->add(f->make());
   }

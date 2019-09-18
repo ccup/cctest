@@ -1,4 +1,5 @@
 #include "cctest/base/time_val.h"
+#include <sstream>
 
 namespace cctest {
 
@@ -12,7 +13,12 @@ void TimeVal::now() {
 }
 
 std::string TimeVal::toString() const {
-  return "";
+  std::stringstream ss;
+  if (tv_sec > 0) {
+    ss << tv_sec << " s ";
+  }
+  ss << tv_usec << " us";
+  return ss.str();
 }
 
 bool TimeVal::operator<(const TimeVal& rhs) const {
