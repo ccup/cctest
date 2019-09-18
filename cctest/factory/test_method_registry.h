@@ -1,8 +1,6 @@
 #ifndef H17ECBE7F_AB24_48CD_A1ED_CBE0460C95C4
 #define H17ECBE7F_AB24_48CD_A1ED_CBE0460C95C4
 
-#include "cctest/base/singleton.h"
-#include "cctest/base/keywords.h"
 #include "cctest/factory/test_method_factory.h"
 #include "cctest/factory/test_suite_factory.h"
 #include <unordered_map>
@@ -26,7 +24,7 @@ struct TestMethodRegistry : TestSuiteFactory {
   }
 
 private:
-  Test* make() override {
+  Test* make() const override {
     static Fixture dummy; // register all test methods to this.
     return TestSuiteFactory::make();
   }

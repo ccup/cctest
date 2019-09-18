@@ -14,7 +14,7 @@ struct TestSuiteFactory : TestFactory {
   static TestSuiteFactory& root();
 
 protected:
-  Test* make() override;
+  Test* make() const override;
 
 private:
   std::string name;

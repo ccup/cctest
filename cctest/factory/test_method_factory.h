@@ -13,7 +13,7 @@ struct TestMethodFactory : TestFactory {
   }
 
 private:
-  Test* make() override {
+  Test* make() const override {
     return new TestMethod<Fixture>(method, name);
   }
 

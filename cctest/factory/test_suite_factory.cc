@@ -15,7 +15,7 @@ void TestSuiteFactory::add(TestFactory &f) {
   factories.push_back(&f);
 }
 
-Test* TestSuiteFactory::make() {
+Test* TestSuiteFactory::make() const {
   auto suite = new TestSuite(name);
   for (auto f : factories) {
     suite->add(f->make());

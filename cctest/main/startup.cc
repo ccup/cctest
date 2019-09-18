@@ -6,10 +6,10 @@
 
 namespace cctest {
 
-void run_all_tests(int /* argc */, char** /* argv */) {
+int run_all_tests(int /* argc */, char** /* argv */) {
   ColorfulPrinter printer(std::cout);
-  TestRunner runner(printer, TestSuiteFactory::root());
-  runner.run();
+  TestRunner(printer, TestSuiteFactory::root()).run();
+  return 0;
 }
 
 } // namespace cctest
