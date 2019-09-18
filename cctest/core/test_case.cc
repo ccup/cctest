@@ -45,6 +45,10 @@ const Test& TestCase::get() const {
   return *this;
 }
 
+int TestCase::countTestCases() const {
+  return 1;
+}
+
 void TestCase::run(TestResult& result) {
   result.runTestCase(*this);
 }

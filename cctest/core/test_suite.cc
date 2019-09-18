@@ -13,6 +13,14 @@ void TestSuite::add(Test* test) {
   tests.push_back(test);
 }
 
+int TestSuite::countTestCases() const {
+  int result = 0;
+  for (auto test : tests) {
+    result += test->countTestCases();
+  };
+  return result;
+}
+
 void TestSuite::run(TestResult& result) {
   result.runTestSuite(*this);
 }

@@ -10,6 +10,10 @@ bool TestFailure::isFailure() const {
   return failure;
 }
 
+const std::string& TestFailure::getTestName() const {
+  return "";  
+}
+
 const std::string& TestFailure::getExceptionMsg() const {
   return msg;
 }

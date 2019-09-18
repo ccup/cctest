@@ -26,6 +26,10 @@ int TestCollector::passCount() const {
   return numOfPassed;
 }
 
+int TestCollector::failTotal() const {
+  return numOfErrors + numOfFails;
+}
+
 void TestCollector::startTestCase(const Test&) {
   numOfRuns++;
   lastFailed = false;

@@ -14,6 +14,7 @@ struct TestSuite : Test, private BareTestSuite {
   void add(Test* test);
 
 private:
+  int countTestCases() const override;
   void run(TestResult& result) override;
 
 private:

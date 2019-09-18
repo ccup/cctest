@@ -11,6 +11,7 @@ struct TestCase : Test, private TestFixture, private BareTestCase {
   using Test::Test;
 
 private:
+  int countTestCases() const override;
   void run(TestResult& result) override;
 
 private:

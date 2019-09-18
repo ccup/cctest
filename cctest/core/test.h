@@ -11,6 +11,7 @@ struct Test {
   Test(const std::string& name = "");
   const std::string& getName() const;
 
+  virtual int countTestCases() const = 0;
   virtual void run(TestResult&) = 0;
   virtual ~Test() {}
 

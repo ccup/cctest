@@ -11,6 +11,10 @@ void TimeVal::now() {
   gettimeofday(this, 0);
 }
 
+std::string TimeVal::toString() const {
+  return "";
+}
+
 bool TimeVal::operator<(const TimeVal& rhs) const {
   if (tv_sec < rhs.tv_sec) return true;
   if (rhs.tv_sec < tv_sec) return false;
