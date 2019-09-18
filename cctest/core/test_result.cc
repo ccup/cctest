@@ -8,34 +8,27 @@
 
 namespace cctest {
 
-void TestResult::addListener(TestListener& listener) {
-  listeners.push_back(&listener);
-}
-
-#define BOARDCAST(action) \
-  for (auto listener : listeners) listener->action
-
 void TestResult::runRootTest(Test& test) {
-  BOARDCAST(startTestRun(test));
+  MultiListener::startTestRun(test);
   test.run(*this);
-  BOARDCAST(endTestRun(test));
+  MultiListener::endTestRun(test);
 }
 
 void TestResult::runTestCase(BareTestCase& test) {
-  BOARDCAST(startTestCase(test.get()));
+  MultiListener::startTestCase(test.get());
   test.runBare(*this);
-  BOARDCAST(endTestCase(test.get()));
+  MultiListener::endTestCase(test.get());  
 }
 
 void TestResult::runTestSuite(BareTestSuite& test) {
-  BOARDCAST(startTestSuite(test.get()));
+  MultiListener::startTestSuite(test.get());
   test.runBare(*this);
-  BOARDCAST(endTestSuite(test.get()));
+  MultiListener::endTestSuite(test.get());
 }
 
-void TestResult::addFailure(std::string&& msg, bool failure) {
-  failures.emplace_back(std::move(msg), failure);
-  BOARDCAST(addFailure(failures.back()));
+void TestResult::onFail(std::string who, std::string msg, bool failure) {
+  failures.emplace_back(std::move(who), std::move(msg), failure);
+  MultiListener::addFailure(failures.back());
 }
 
 namespace {
@@ -50,8 +43,8 @@ namespace {
   } const e;
 }
 
-#define ON_FAIL(except)  addFailure(msg(except, f.where(), e.what()), true)
-#define ON_ERROR(except) addFailure(msg(except, f.where(), e.what()), false)
+#define ON_FAIL(why)  onFail(f.who(), msg(why, f.where(), e.what()), true)
+#define ON_ERROR(why) onFail(f.who(), msg(why, f.where(), e.what()), false)
 
 bool TestResult::protect(const TestCaseMethod& f) {
   try {

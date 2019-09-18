@@ -4,6 +4,7 @@
 namespace cctest {
 
 struct TestCaseMethod {
+  virtual const char* who() const = 0;
   virtual const char* where() const = 0;
   virtual bool operator()() const = 0;
   virtual ~TestCaseMethod() {}

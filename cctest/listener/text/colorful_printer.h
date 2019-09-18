@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "cctest/core/multi_listener.h"
 #include "cctest/listener/collector/failure_list.h"
 #include "cctest/listener/collector/test_collector.h"
 #include "cctest/listener/collector/test_status.h"
@@ -12,7 +13,7 @@ namespace cctest {
 
 struct TestInfo;
 
-struct ColorfulPrinter : TestListener {
+struct ColorfulPrinter : MultiListener {
   explicit ColorfulPrinter(std::ostream& = std::cout);
   ~ColorfulPrinter();
 

@@ -5,13 +5,16 @@
 
 namespace cctest {
 
-std::ostream& white(std::ostream&);
-std::ostream& red(std::ostream&);
-std::ostream& green(std::ostream&);
-std::ostream& yellow(std::ostream&);
-std::ostream& bulue(std::ostream&);
-std::ostream& magenta(std::ostream&);
-std::ostream& cyan(std::ostream&);
+#define DECL_COLOR(color) \
+std::ostream& color(std::ostream&);
+
+DECL_COLOR(white)
+DECL_COLOR(red)
+DECL_COLOR(green)
+DECL_COLOR(yellow)
+DECL_COLOR(blue)
+DECL_COLOR(magenta)
+DECL_COLOR(cyan)
 
 } // namespace cctest
 

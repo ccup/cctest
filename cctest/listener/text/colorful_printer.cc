@@ -65,7 +65,6 @@ private:
     }
   }
 
-
   void onTestRun(const Test& test) const {
     green(self.out) << "[==========] ";
     white(self.out) << test.countTestCases()
@@ -122,7 +121,11 @@ private:
 };
 
 ColorfulPrinter::ColorfulPrinter(std::ostream& out)
-  : lastFailed(false), out(out), writer(new Writer(*this)) {
+    : lastFailed(false), out(out), writer(new Writer(*this)) {
+  addListener(status);
+  addListener(collector);
+  addListener(lister);
+  addListener(clock);
 }
 
 ColorfulPrinter::~ColorfulPrinter() {
@@ -130,43 +133,39 @@ ColorfulPrinter::~ColorfulPrinter() {
 }
 
 void ColorfulPrinter::startTestRun(const Test& test) {
-  clock.startTestRun(test);
+  MultiListener::startTestRun(test);
   writer->writeOnStartTestRun(test);
 }
 
 void ColorfulPrinter::endTestRun(const Test& test) {
+  MultiListener::endTestRun(test);
   writer->writeOnEndTestRun(test);
 }
 
 void ColorfulPrinter::startTestCase(const Test& test) {
   lastFailed = false;
-  collector.startTestCase(test);
-  clock.startTestCase(test);
-
+  MultiListener::startTestCase(test);
   writer->writeOnStartTestCase(test);
 }
 
 void ColorfulPrinter::endTestCase(const Test& test) {
-  collector.endTestCase(test);
-  clock.endTestCase(test);
-
+  MultiListener::endTestCase(test);
   writer->writeOnEndTestCase(test);
 }
 
 void ColorfulPrinter::startTestSuite(const Test& test) {
+  MultiListener::startTestSuite(test);
   writer->writeOnStartTestSuite(test);
 }
 
 void ColorfulPrinter::endTestSuite(const Test& test) {
+  MultiListener::endTestSuite(test);
   writer->writeOnEndTestSuite(test);
 }
 
 void ColorfulPrinter::addFailure(const TestFailure& fail) {
   lastFailed = true;
-  status.addFailure(fail);
-  collector.addFailure(fail);
-  lister.addFailure(fail);
-
+  MultiListener::addFailure(fail);
   writer->writeOnAddFailure(fail);
 }
 
