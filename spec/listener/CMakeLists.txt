@@ -24,7 +24,8 @@ cc_test(
   SRCS
     "test_status_spec.cc"
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
 
 cc_test(
