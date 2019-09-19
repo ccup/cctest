@@ -29,11 +29,7 @@ else()
   set(CCTEST_USING_CLANG OFF)
 endif()
 
-## external dependencies
-find_package(Threads REQUIRED)
-
 ## options
-option(CCTEST_USE_GTEST "If ON, cctest will download gtest." OFF)
 option(CCTEST_RUN_TESTS "If ON, cctest test cases will be run." ON)
 
 ## enable test runtime
@@ -43,16 +39,9 @@ if(${CCTEST_RUN_TESTS})
 endif()
 
 if(BUILD_TESTING)
-  if(${CCTEST_USE_GTEST})
-    include(cmake/gtest/download-gtest.cmake)
-    set(CCTEST_GTEST_SOURCE_DIR ${CMAKE_BINARY_DIR}/gtest-src)
-    set(CCTEST_GTEST_BINARY_DIR ${CMAKE_BINARY_DIR}/gtest-build)
-  endif()
-
   list(APPEND CCTEST_TEST_COMMON_LIBS
-    gtest_main
-    gtest
-    ${CMAKE_THREAD_LIBS_INIT}
+    cctest_main
+    cctest
   )
 endif()
 

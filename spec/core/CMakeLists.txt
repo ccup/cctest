@@ -3,9 +3,6 @@ cc_test(
     test_method_spec
   SRCS
     test_method_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -13,9 +10,6 @@ cc_test(
     test_case_spec
   SRCS
     test_case_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -23,9 +17,6 @@ cc_test(
     test_fixture_spec
   SRCS
     test_fixture_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -33,9 +24,6 @@ cc_test(
     test_suite_spec
   SRCS
     test_suite_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -43,7 +31,4 @@ cc_test(
     test_result_spec
   SRCS
     test_result_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )

@@ -3,9 +3,6 @@ cc_test(
     stack_spec
   SRCS
     stack_spec.cc
-  DEPS
-    cctest_main
-    cctest
 )
 
 cc_test(
@@ -13,7 +10,4 @@ cc_test(
     queue_spec
   SRCS
     queue_spec.cc
-  DEPS
-    cctest_main  
-    cctest
 )

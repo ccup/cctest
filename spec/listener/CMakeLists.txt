@@ -3,9 +3,6 @@ cc_test(
     test_collector_spec
   SRCS
     test_collector_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -13,9 +10,6 @@ cc_test(
     failure_list_spec
   SRCS
     failure_list_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -23,9 +17,6 @@ cc_test(
     test_status_spec
   SRCS
     test_status_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
 
 cc_test(
@@ -33,9 +24,6 @@ cc_test(
     text_progress_spec
   SRCS
     text_progress_spec.cc
-  DEPS
-    cctest
-    cctest_main    
 )
 
 cc_test(
@@ -43,7 +31,4 @@ cc_test(
     time_collector_spec
   SRCS
     time_collector_spec.cc
-  DEPS
-    cctest
-    cctest_main
 )
