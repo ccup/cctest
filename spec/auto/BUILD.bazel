@@ -1,0 +1,21 @@
+cc_test(
+  name = "stack_spec",
+  srcs = [
+    "stack_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "//cctest:main",
+  ],
+)
+
+cc_test(
+  name = "queue_spec",
+  srcs = [
+    "queue_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "//cctest:main",
+  ],
+)
