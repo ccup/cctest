@@ -32,9 +32,10 @@ cc_test(
   NAME
     test_suite_spec
   SRCS
-    "test_suite_spec.cc"
+    test_suite_spec.cc
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
 
 cc_test(

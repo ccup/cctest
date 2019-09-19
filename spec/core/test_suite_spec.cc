@@ -1,5 +1,4 @@
-#include "gtest/gtest.h"
-#include "cctest/core/test_case.h"
+#include "cctest/cctest.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/test_suite.h"
 #include "cctest/listener/collector/test_collector.h"
@@ -8,13 +7,20 @@ using namespace cctest;
 
 namespace {
 
-struct TestSuiteResult : testing::Test {
-protected:
-  void run(cctest::Test& test) {
+FIXTURE(TestSuiteResult) {
+  TestCollector collector;
+  TestResult result;
+  TestSuite suite;
+
+  SETUP {
+    result.addListener(collector);
+  }
+
+  void run(Test& test) {
     test.run(result);
   }
 
-  using SingleTestFactory = cctest::Test*(*)();
+  using SingleTestFactory = Test*(*)();
 
   void example(SingleTestFactory factory) {
     suite.add(factory());
@@ -24,39 +30,28 @@ protected:
     ASSERT_EQ(2, collector.runCount());
   }
 
-private:
-  void SetUp() override {
-    result.addListener(collector);
+  static Test* singleCase() {
+    return new TestCase;
   }
 
-protected:
-  TestCollector collector;
-  TestResult result;
-  TestSuite suite;
+  TEST("package test case into test suite") {
+    example(singleCase);
+  }
+
+  static Test* singleSuite() {
+    TestSuite* suite = new TestSuite;
+    suite->add(singleCase());
+    return suite;
+  }
+
+  TEST("package sub suite into test suite") {
+    example(singleSuite);
+  }
+
+  TEST("named test suite") {
+    TestSuite suite("test suite");
+    ASSERT_EQ("test suite", suite.getName());
+  }
 };
-
-cctest::Test* singleCase() {
-  return new TestCase;
-}
-
-TEST_F(TestSuiteResult, package_test_case_into_test_suite) {
-  example(singleCase);
-}
-
-cctest::Test* singleSuite() {
-  TestSuite* suite = new TestSuite;
-  suite->add(singleCase());
-  return suite;
-}
-
-TEST_F(TestSuiteResult, package_sub_suite_into_test_suite) {
-  example(singleSuite);
-}
-
-TEST(NamedTestSuite, named_test_suite) {
-  TestSuite suite("test suite");
-  ASSERT_EQ("test suite", suite.getName());
-}
-
 
 } // namespace
