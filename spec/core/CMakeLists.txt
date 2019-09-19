@@ -13,7 +13,8 @@ cc_test(
   SRCS
     "test_case_spec.cc"
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
 
 cc_test(
