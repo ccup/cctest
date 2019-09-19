@@ -19,20 +19,12 @@ $ bazel test //spec/...
 
 ### CMake
 
-If you install GoogleTest beforehand.
-
 ```bash
 $ mkdir build
 $ cd build
 $ cmake .. 
 $ make
 $ make test
-```
-
-If you don't install GoogleTest, cctest can download and build it by enabling `CCTEST_USE_GTEST`.
-
-```bash
-$ cmake -DCCTEST_USE_GTEST=on ..
 ```
 
 If you don't want run test cases, you can close "CCTEST_RUN_TESTS" option.
