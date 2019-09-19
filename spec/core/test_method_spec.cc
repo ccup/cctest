@@ -1,5 +1,4 @@
-#include "gtest/gtest.h"
-#include "cctest/core/test_method.h"
+#include "cctest/cctest.h"
 #include "cctest/core/test_result.h"
 
 using namespace cctest;
@@ -40,10 +39,11 @@ private:
   TestMethod<WasRun> method;
 };
 
-
-TEST(TestMethodSpec, full_lifecycle_for_test_case) {
-  WasRun wasRun;
-  wasRun.expectResult("[setUp][runTest][tearDown]");
-}
+FIXTURE(TestMethodSpec) {
+  TEST("full lifecycle for test case") {
+    WasRun wasRun;
+    wasRun.expectResult("[setUp][runTest][tearDown]");
+  }
+};
 
 } // namespace
