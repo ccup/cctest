@@ -5,7 +5,7 @@ cc_test(
   ],
   deps = [
     "//cctest",
-    "//cctest_main",    
+    "//cctest:main",    
   ],
 )
 
@@ -50,7 +50,6 @@ cc_test(
   ],
   deps = [
     "//cctest",
-    "@com_github_google_googletest//:gtest",
-    "@com_github_google_googletest//:gtest_main",    
+    "//cctest:main",    
   ]
 )

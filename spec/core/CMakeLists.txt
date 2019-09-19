@@ -41,7 +41,8 @@ cc_test(
   NAME
     test_result_spec
   SRCS
-    "test_result_spec.cc"
+    test_result_spec.cc
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
