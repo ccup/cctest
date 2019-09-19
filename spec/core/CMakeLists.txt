@@ -11,7 +11,7 @@ cc_test(
   NAME
     test_case_spec
   SRCS
-    "test_case_spec.cc"
+    test_case_spec.cc
   DEPS
     cctest
     cctest_main
@@ -21,9 +21,10 @@ cc_test(
   NAME
     test_fixture_spec
   SRCS
-    "test_fixture_spec.cc"
+    test_fixture_spec.cc
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
 
 cc_test(

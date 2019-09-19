@@ -1,5 +1,4 @@
-#include "gtest/gtest.h"
-#include "cctest/core/test_case.h"
+#include "cctest/cctest.h"
 #include "cctest/core/test_result.h"
 
 using namespace cctest;
@@ -20,19 +19,18 @@ private:
   bool wasSucc = false;
 };
 
-struct TestFixtureSpec : testing::Test {
-protected:
+FIXTURE(TestFixtureSpec) {
   void run(cctest::Test& test) {
     TestResult dummy;
     test.run(dummy);
   }
-};
 
-TEST_F(TestFixtureSpec, make_sure_be_succ) {
-  WasSucc test;
-  run(test);
-  ASSERT_TRUE(test.succ());
-}
+  TEST("make sure be succ") {
+    WasSucc test;
+    run(test);
+    ASSERT_TRUE(test.succ());
+  }
+};
 
 } // namespace
 
