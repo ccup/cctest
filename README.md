@@ -6,6 +6,12 @@ C/C++ are different languages from most modern ones. Writing tests for them has 
 
 **cctest** is designed for simplifying efforts of programers, in terms of development, maintenance, flexibility of test management, build & run-time strategy, and others.
 
+### Install
+
+```bash
+$ curl -fsSL https://raw.github.com/ccup/cctest/master/install.sh | sh
+```
+
 ### [Bazel](https://www.bazel.build)
 
 #### Build
