@@ -32,23 +32,23 @@ $ cmake ..
 $ make
 ```
 
-#### Test
-
-```bash
-$ make test
-```
-
 If you don't want to run test cases, you should close "CCTEST_RUN_TESTS" option.
 
 ```bash
 $ cmake -DCCTEST_RUN_TESTS=off ..
 ```
 
+#### Test
+
+```bash
+$ make
+$ make test
+```
+
 #### Install
 
 ```bash
 $ sudo make install
-$ sudo ldconfig
 ```
 
 #### Uninstall
