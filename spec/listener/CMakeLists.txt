@@ -34,7 +34,8 @@ cc_test(
   SRCS
     "text_progress_spec.cc"
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main    
 )
 
 cc_test(
