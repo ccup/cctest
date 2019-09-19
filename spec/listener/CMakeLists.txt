@@ -11,9 +11,10 @@ cc_test(
   NAME
     failure_list_spec
   SRCS
-    "failure_list_spec.cc"
+    failure_list_spec.cc
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
 
 cc_test(
