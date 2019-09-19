@@ -9,4 +9,5 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 include(CTest)
 enable_testing()
 
+add_subdirectory("simple")
 add_subdirectory("stlspec")

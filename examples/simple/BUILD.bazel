@@ -1,0 +1,11 @@
+cc_test(
+  name = "simple_test",
+  srcs = [
+    "simple_test.cc"
+  ],
+  deps = [
+    "@github_ccup_cctest//cctest",
+    "@github_ccup_cctest//cctest:main",
+  ],
+)
+
