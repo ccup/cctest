@@ -7,6 +7,7 @@
 namespace cctest {
 
 struct AssertionError : std::exception {
+  AssertionError(const char* file, int line, const std::string& msg);
   AssertionError(const std::string& src, const std::string& msg);
   const char* what() const noexcept;
 

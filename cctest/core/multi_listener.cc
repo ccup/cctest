@@ -2,6 +2,11 @@
 
 namespace cctest {
 
+MultiListener::MultiListener(std::vector<TestListener*> listeners)
+  : listeners(std::move(listeners)) {
+}
+
+
 void MultiListener::addListener(TestListener& listener) {
   listeners.push_back(&listener);
 }

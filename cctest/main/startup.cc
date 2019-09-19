@@ -7,9 +7,12 @@
 namespace cctest {
 
 int run_all_tests(int /* argc */, char** /* argv */) {
+  TestStatus status;
   ColorfulPrinter printer(std::cout);
-  TestRunner(printer, TestSuiteFactory::root()).run();
-  return 0;
+  MultiListener listener({&status, &printer});
+
+  TestRunner(listener, TestSuiteFactory::root()).run();
+  return status.successful() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 } // namespace cctest

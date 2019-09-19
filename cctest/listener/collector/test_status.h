@@ -9,6 +9,7 @@ struct TestStatus : TestListener {
   TestStatus();
   bool successful() const;
 
+private:
   void addFailure(const TestFailure&) override;
 
 private:

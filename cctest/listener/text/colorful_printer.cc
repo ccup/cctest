@@ -2,6 +2,7 @@
 #include "cctest/base/color.h"
 #include "cctest/core/test.h"
 #include "cctest/except/test_failure.h"
+#include <sstream>
 
 namespace cctest {
 
@@ -33,9 +34,7 @@ struct ColorfulPrinter::Writer {
 
   void writeOnEndTestCase(const Test& test) const {
     self.lastFailed ? onTestCaseFail() : onTestCaseSucc();
-    white(self.out) << test.getName()
-                    << "(" << self.clock.caseTime().toString() << ")"
-                    << std::endl;
+    white(self.out) << test.getName() << caseTime() << std::endl;
   }
 
   void writeOnAddFailure(const TestFailure& fail) const {
@@ -43,6 +42,24 @@ struct ColorfulPrinter::Writer {
   }
 
 private:
+  std::string formatTime(const TimeVal& time) const {
+    std::stringstream ss;
+    ss << "(" << time.toString() << ")";
+    return ss.str();
+  }
+
+  std::string caseTime() const {
+    return formatTime(self.clock.caseTime());
+  }
+
+  std::string suiteTime() const {
+    return formatTime(self.clock.suiteTime());
+  }
+
+  std::string totalTime() const {
+    return formatTime(self.clock.totalTime());
+  }
+
   void onSuite(const Test& test) const {
     green(self.out) << "[----------] ";
     white(self.out) << test.countTestCases()
@@ -60,8 +77,7 @@ private:
   void onSuiteFinished(const Test& test) const {
     if (test.getName() != "All Tests") {
       onSuite(test);
-      white(self.out) << "(" << self.clock.suiteTime().toString() << " total)"
-                      << std::endl << std::endl;
+      white(self.out) << suiteTime() << std::endl;
     }
   }
 
@@ -85,8 +101,8 @@ private:
     listFailures();
   }
 
-  std::ostream& title(std::ostream& out) const {
-    return self.status.successful() ? out << green : out << red;
+  std::ostream& title(std::ostream& os) const {
+    return self.status.successful() ? os << green : os << red;
   }
 
   void collectOnFinished() const {
@@ -94,7 +110,7 @@ private:
     white(self.out) << "PASS: "    << self.collector.passCount()  << "  "
                     << "FAILURE: " << self.collector.failCount()  << "  "
                     << "ERROR: "   << self.collector.errorCount() << "  "
-                    << "TIME: "    << self.clock.totalTime().toString()
+                    << "TIME: "    << totalTime()
                     << std::endl;
   }
 
@@ -104,7 +120,7 @@ private:
 
     red(self.out)   << "[  FAILED  ] ";
     white(self.out) << self.collector.failTotal()
-                    << " tests, listed below:\n";
+                    << " failed tests, listed below:\n";
 
     self.lister.foreach([&](const TestFailure& failure) {
       red(self.out)   << titleFor(failure);

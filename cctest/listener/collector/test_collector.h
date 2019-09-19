@@ -14,6 +14,7 @@ struct TestCollector : TestListener {
   int passCount() const;
   int failTotal() const;
 
+private:
   void startTestCase(const Test&) override;
   void endTestCase(const Test&) override;
   void addFailure(const TestFailure&) override;

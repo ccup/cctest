@@ -8,10 +8,12 @@
 namespace cctest {
 
 struct TestSuiteFactory : TestFactory {
-  explicit TestSuiteFactory(std::string);
   void add(TestFactory&);
 
   static TestSuiteFactory& root();
+
+protected:
+  explicit TestSuiteFactory(std::string);
 
 protected:
   Test* make() const override;

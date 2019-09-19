@@ -7,6 +7,9 @@
 namespace cctest {
 
 struct MultiListener : TestListener {
+  MultiListener() = default;
+  MultiListener(std::vector<TestListener*> listeners);
+
   void addListener(TestListener& listener);
 
 protected:

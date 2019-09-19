@@ -70,7 +70,7 @@ void TimeCollector::startTestCase(const Test&) {
 }
 
 void TimeCollector::endTestCase(const Test&) {
-  end(totaltime);
+  end(casetime);
 }
 
 } // namespace cctest

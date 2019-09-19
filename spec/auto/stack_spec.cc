@@ -1,5 +1,3 @@
-#define GTEST_DONT_DEFINE_TEST 1
-#include <gtest/gtest.h>
 #include "cctest/cctest.h"
 #include <stack>
 

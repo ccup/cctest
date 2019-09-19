@@ -15,7 +15,7 @@ struct TestInfo;
 
 struct ColorfulPrinter : MultiListener {
   explicit ColorfulPrinter(std::ostream& = std::cout);
-  ~ColorfulPrinter();
+  ~ColorfulPrinter() override;
 
 private:
   void startTestRun(const Test&) override;

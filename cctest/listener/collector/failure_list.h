@@ -16,6 +16,7 @@ struct FailureList : TestListener {
     }
   }
 
+private:
   void addFailure(const TestFailure&) override;
 
 private:
