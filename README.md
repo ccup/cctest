@@ -6,31 +6,55 @@ C/C++ are different languages from most modern ones. Writing tests for them has 
 
 **cctest** is designed for simplifying efforts of programers, in terms of development, maintenance, flexibility of test management, build & run-time strategy, and others.
 
-## Build
+### [Bazel](https://www.bazel.build)
 
-- [bazel](https://www.bazel.build)
-- [cmake](https://www.cmake.org)
+#### Build
 
-### Bazel
+```bash
+$ bazel build //ctest
+$ bazel build //ctest:main
+```
+
+#### Test
 
 ```bash
 $ bazel test //spec/...
 ```
 
-### CMake
+### [CMake](https://www.cmake.org)
+
+#### Build
 
 ```bash
 $ mkdir build
 $ cd build
 $ cmake .. 
 $ make
+```
+
+#### Test
+
+```bash
 $ make test
 ```
 
-If you don't want run test cases, you can close "CCTEST_RUN_TESTS" option.
+If you don't want to run test cases, you should close "CCTEST_RUN_TESTS" option.
 
 ```bash
 $ cmake -DCCTEST_RUN_TESTS=off ..
+```
+
+#### Install
+
+```bash
+$ sudo make install
+$ sudo ldconfig
+```
+
+#### Uninstall
+
+```bash
+$ cat install_manifest.txt | xargs echo sudo rm | sh
 ```
 
 ## Docker

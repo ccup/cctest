@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(cctest CXX)
 
-# when cctest is included as subproject (i.e. using add_subdirectory(abseil-cpp))
+# when cctest is included as subproject (i.e. using add_subdirectory(cctest))
 # in the source tree of a project that uses it, install rules are disabled.
 if(NOT "^${CMAKE_SOURCE_DIR}$" STREQUAL "^${PROJECT_SOURCE_DIR}$")
   set(CCTEST_ENABLE_INSTALL FALSE)
