@@ -4,7 +4,8 @@ cc_test(
   SRCS
     "test_collector_spec.cc"
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
 
 cc_test(
