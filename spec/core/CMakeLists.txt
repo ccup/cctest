@@ -1,5 +1,12 @@
 cc_test(
   NAME
+    asserter_spec
+  SRCS
+    asserter_spec.cc
+)
+
+cc_test(
+  NAME
     test_method_spec
   SRCS
     test_method_spec.cc

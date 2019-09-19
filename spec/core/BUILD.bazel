@@ -1,4 +1,15 @@
 cc_test(
+  name = "asserter_spec",
+  srcs = [
+    "asserter_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "//cctest:main",    
+  ],
+)
+
+cc_test(
   name = "test_method_spec",
   srcs = [
     "test_method_spec.cc"
