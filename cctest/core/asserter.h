@@ -90,31 +90,31 @@ namespace cctest {
 } while(0)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_FLT_EQ(expected, value) \
+#define ASSERT_FLOAT_EQ(expected, value) \
   __CCTEST_ASSERT_FLOAT_EQUALITY(FLT_EPSILON, expected, !, ==, !=, value)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_FLT_NE(expected, value) \
+#define ASSERT_FLOAT_NE(expected, value) \
   __CCTEST_ASSERT_FLOAT_EQUALITY(FLT_EPSILON, expected, , !=, ==, value)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_DBL_EQ(expected, value) \
+#define ASSERT_DOUBLE_EQ(expected, value) \
   __CCTEST_ASSERT_FLOAT_EQUALITY(DBL_EPSILON, expected, !, ==, !=, value)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_DBL_NE(expected, value) \
+#define ASSERT_DOUBLE_NE(expected, value) \
   __CCTEST_ASSERT_FLOAT_EQUALITY(DBL_EPSILON, expected, , !=, ==, value)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_LDBL_EQ(expected, value) \
+#define ASSERT_LONG_DOUBLE_EQ(expected, value) \
   __CCTEST_ASSERT_FLOAT_EQUALITY(LDBL_EPSILON, expected, !, ==, !=, value)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_LDBL_NE(expected, value) \
+#define ASSERT_LONG_DOUBLE_NE(expected, value) \
   __CCTEST_ASSERT_FLOAT_EQUALITY(LDBL_EPSILON, expected, , !=, ==, value)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_THROWS(expr, except) do { \
+#define ASSERT_THROW(expr, except) do { \
   bool cctest_caught_exception = false; \
   try { \
     expr; \
@@ -133,7 +133,7 @@ namespace cctest {
 } while(0)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_THROWS_ANYTHING(expr) do { \
+#define ASSERT_THROW_ANYTHING(expr) do { \
   bool __cctest_caught_exception = false; \
   try { \
     expr; \
@@ -147,7 +147,7 @@ namespace cctest {
 } while(0)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_THROWS_NOTHING(expr) do { \
+#define ASSERT_THROW_NOTHING(expr) do { \
   try { \
     expr; \
   } catch(...){ \
@@ -157,18 +157,7 @@ namespace cctest {
 } while(0)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_THROWS_EQ(expr, except, expected, value) do { \
-  try { \
-    expr; \
-    __CCTEST_REPORT_FAILURE ( \
-        "expected " #expr " will throw an exception of type " #except ", but actually not.", failfast); \
-  } catch(except){ \
-    __ASSERT_EQ(expected, value); \
-  } \
-} while(0)
-
-//////////////////////////////////////////////////////////////////
-#define ASSERT_SAME_DATA(addr1, addr2, size) do { \
+#define ASSERT_SAME(addr1, addr2, size) do { \
   void* p1 = reinterpret_cast<void*>(addr1); \
   void* p2 = reinterpret_cast<void*>(addr2); \
   if (::memcmp((void*)p1, (void*)p2, size)) { \
