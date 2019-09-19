@@ -23,7 +23,6 @@ FIXTURE(EqualSpec) {
   }
 
   TEST("compare std::string with c-style string") {
-    ASSERT_EQ("hello", "hello");
     ASSERT_EQ("hello", std::string("hello"));
     ASSERT_EQ(std::string("hello"), "hello");    
     ASSERT_EQ(std::string("hello"), std::string("hello"));
@@ -50,7 +49,6 @@ FIXTURE(NotEqualSpec) {
   }
 
   TEST("compare std::string with c-style string") {
-    ASSERT_NE("hello", "world");
     ASSERT_NE("hello", std::string("world"));
     ASSERT_NE(std::string("hello"), "world");    
     ASSERT_NE(std::string("hello"), std::string("world"));    
@@ -102,6 +100,66 @@ FIXTURE(AssertFalseSpec) {
 
     p = 0;
     ASSERT_FALSE(p);     
+  }
+};
+
+FIXTURE(LessToSpec) {
+  TEST("should allow compare to integer") {
+    ASSERT_LT(0xEE, 0xFF);
+    ASSERT_LT(0xEE, 0xFF);
+  }
+
+  TEST("should allow compare to string") {
+    ASSERT_LT(std::string("hello"), "world");
+    ASSERT_LT("hello", std::string("world"));
+    ASSERT_LT(std::string("hello"), std::string("world"));
+  }
+};
+
+FIXTURE(LessOrEqualToSpec) {
+  TEST("should allow compare to integer") {
+    ASSERT_LE(0xEE, 0xFF);
+    ASSERT_LE(0xEE, 0xEE);
+  }
+
+  TEST("should allow compare to string") {
+    ASSERT_LE("hello", std::string("hello"));
+    ASSERT_LE(std::string("hello"), std::string("hello"));
+    ASSERT_LE(std::string("hello"), "hello");    
+
+    ASSERT_LE("hello", std::string("world"));
+    ASSERT_LE(std::string("hello"), std::string("world"));
+    ASSERT_LE(std::string("hello"), "world");    
+  }
+};
+
+FIXTURE(GreaterToSpec) {
+  TEST("should allow compare to integer") {
+    ASSERT_GT(0xFF, 0xEE);
+    ASSERT_GT(0xFF, 0xEE);
+  }
+
+  TEST("should allow compare to string") {
+    ASSERT_GT("world", std::string("hello"));
+    ASSERT_GT(std::string("world"), std::string("hello"));
+    ASSERT_GT(std::string("world"), "hello");    
+  }
+};
+
+FIXTURE(GreaterOrEqualToSpec) {
+  TEST("should allow compare to integer") {
+    ASSERT_GE(0xFF, 0xEE);
+    ASSERT_GE(0xFF, 0xFF);
+  }
+
+  TEST("should allow compare to string") {
+    ASSERT_GE("world", std::string("hello"));
+    ASSERT_GE(std::string("world"), std::string("hello"));
+    ASSERT_GE(std::string("world"), "hello");
+
+    ASSERT_GE("world", std::string("world"));
+    ASSERT_GE(std::string("world"), std::string("world"));
+    ASSERT_GE(std::string("world"), "world");
   }
 };
 
