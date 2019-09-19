@@ -4,8 +4,8 @@ cc_test(
     "stack_spec.cc"
   ],
   deps = [
-    "//cctest",
-    "//cctest:main",
+    "@github_ccup_cctest//cctest",
+    "@github_ccup_cctest//cctest:main",
   ],
 )
 
@@ -15,7 +15,7 @@ cc_test(
     "queue_spec.cc"
   ],
   deps = [
-    "//cctest",
-    "//cctest:main",
+    "@github_ccup_cctest//cctest",
+    "@github_ccup_cctest//cctest:main",
   ],
 )
