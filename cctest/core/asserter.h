@@ -12,34 +12,39 @@
 namespace cctest {
 
 //////////////////////////////////////////////////////////////////
+#define __CCTEST_MAKE_STR(expr) " " #expr " "
+
+//////////////////////////////////////////////////////////////////
 #define __CCTEST_REPORT_FAILURE(what) \
     throw AssertionError(__FILE__, __LINE__, what)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_TRUE(expr) do { \
-  if(!(expr)) { \
-    __CCTEST_REPORT_FAILURE("expected (" #expr ") being TRUE, but it's actually FALSE"); \
+#define __CCTEST_ASSERT_BOOL(expr, not_comp, expected_value, wrong_value) do { \
+  if(not_comp(expr)) { \
+    __CCTEST_REPORT_FAILURE(              \
+      "expected (" #expr ") being"        \
+      __CCTEST_MAKE_STR(expected_value)   \
+      ", but it's actually"               \
+      __CCTEST_MAKE_STR(wrong_value));    \
   } \
 } while(0)
 
 //////////////////////////////////////////////////////////////////
-#define ASSERT_FALSE(expr) do { \
-  if (expr) { \
-    __CCTEST_REPORT_FAILURE("expected (" #expr ") being FALSE, but it's actually TRUE"); \
-  } \
-} while(0)
+#define ASSERT_TRUE(expr)  \
+  __CCTEST_ASSERT_BOOL(expr, !, true,  false)
 
 //////////////////////////////////////////////////////////////////
-#define __CCTEST_MAKE_STR(expr) " " #expr " "
+#define ASSERT_FALSE(expr) \
+  __CCTEST_ASSERT_BOOL(expr, ,  false, true)
 
 //////////////////////////////////////////////////////////////////
-#define __CCTEST_ASSERT_EQUALITY(expected_value, not_equals, expected_equality, wrong_equality, value) do {\
+#define __CCTEST_ASSERT_CMP(expected_value, not_comp, expected_comp, wrong_comp, value) do {\
    decltype(value) __cctest_value = (value); \
-   if (not_equals(expected_value == __cctest_value)) { \
+   if (not_comp(expected_value expected_comp __cctest_value)) { \
      std::stringstream ss; \
-     ss << "expected (" #expected_value __CCTEST_MAKE_STR(expected_equality) #value "), found (" \
+     ss << "expected (" #expected_value __CCTEST_MAKE_STR(expected_comp) #value "), found (" \
         << cctest::toTypeAndValueString(expected_value) \
-        << __CCTEST_MAKE_STR(wrong_equality) \
+        << __CCTEST_MAKE_STR(wrong_comp) \
         << cctest::toTypeAndValueString(__cctest_value) \
         << ")"; \
      __CCTEST_REPORT_FAILURE(ss.str()); \
@@ -47,6 +52,30 @@ namespace cctest {
 } while(0)
 
 //////////////////////////////////////////////////////////////////
+#define ASSERT_EQ(expected, value) \
+  __CCTEST_ASSERT_CMP(expected, !, ==, !=, value)
+
+//////////////////////////////////////////////////////////////////
+#define ASSERT_NE(expected, value) \
+  __CCTEST_ASSERT_CMP(expected, !, !=, ==, value)  
+
+//////////////////////////////////////////////////////////////////
+#define ASSERT_LT(expected, value) \
+  __CCTEST_ASSERT_CMP(expected, !, <, >=, value)
+
+//////////////////////////////////////////////////////////////////
+#define ASSERT_GT(expected, value) \
+  __CCTEST_ASSERT_CMP(expected, !, >, <=, value)  
+
+//////////////////////////////////////////////////////////////////
+#define ASSERT_LE(expected, value) \
+  __CCTEST_ASSERT_CMP(expected, !, <=, >, value)  
+
+//////////////////////////////////////////////////////////////////
+#define ASSERT_GE(expected, value) \
+  __CCTEST_ASSERT_CMP(expected, !, >=, <, value)    
+
+////////////////////////////////////////////////////////////////
 #define __CCTEST_ASSERT_FLOAT_EQUALITY(eps, expected_value, not_equals, expected_equality, wrong_equality, value) do {\
   decltype(value) __cctest_value = (value); \
   if (not_equals(fabs(expected_value - __cctest_value) < eps)) { \
@@ -59,14 +88,6 @@ namespace cctest {
     __CCTEST_REPORT_FAILURE(ss.str()); \
   } \
 } while(0)
-
-//////////////////////////////////////////////////////////////////
-#define ASSERT_EQ(expected, value) \
-  __CCTEST_ASSERT_EQUALITY(expected, !, ==, !=, value)
-
-//////////////////////////////////////////////////////////////////
-#define ASSERT_NE(expected, value) \
-  __CCTEST_ASSERT_EQUALITY(expected, , !=, ==, value)
 
 //////////////////////////////////////////////////////////////////
 #define ASSERT_FLT_EQ(expected, value) \

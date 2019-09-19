@@ -2,7 +2,7 @@ cc_test(
   NAME
     test_collector_spec
   SRCS
-    "test_collector_spec.cc"
+    test_collector_spec.cc
   DEPS
     cctest
     cctest_main
@@ -22,7 +22,7 @@ cc_test(
   NAME
     test_status_spec
   SRCS
-    "test_status_spec.cc"
+    test_status_spec.cc
   DEPS
     cctest
     cctest_main
@@ -32,7 +32,7 @@ cc_test(
   NAME
     text_progress_spec
   SRCS
-    "text_progress_spec.cc"
+    text_progress_spec.cc
   DEPS
     cctest
     cctest_main    
@@ -42,7 +42,8 @@ cc_test(
   NAME
     time_collector_spec
   SRCS
-    "time_collector_spec.cc"
+    time_collector_spec.cc
   DEPS
-    cctest::cctest
+    cctest
+    cctest_main
 )
