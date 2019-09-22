@@ -28,6 +28,7 @@ std::string toString(float f);
 std::string toString(double d);
 std::string toString(bool b);
 std::string toString(char c);
+std::string toString(signed char c);
 std::string toString(unsigned char c);
 std::string toString(short s);
 std::string toString(unsigned short s);
@@ -58,6 +59,8 @@ std::string toTypeAndValueString(const T &val) {
   ss << "(" << TypeString<T>::value() << ")" << toString(val);
   return ss.str();
 }
+
+std::string toTypeAndValueString(std::nullptr_t p);
 
 } // namespace cctest
 

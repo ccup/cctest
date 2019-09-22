@@ -18,6 +18,10 @@ std::string toValStr(char val) {
   return toValStr((int) val);
 }
 
+std::string toValStr(signed char val) {
+  return toValStr((int) val);
+}
+
 std::string toValStr(unsigned char val) {
   return toValStr((unsigned int) val);
 }
@@ -31,6 +35,10 @@ std::string toHexStr(T val) {
 }
 
 std::string toHexStr(char val) {
+  return toHexStr((int) val & 0xFF);
+}
+
+std::string toHexStr(signed char val) {
   return toHexStr((int) val & 0xFF);
 }
 
@@ -142,6 +150,10 @@ std::string toString(char c) {
   return toHexAndDecStr(c);
 }
 
+std::string toString(signed char c) {
+  return toHexAndDecStr(c);
+}
+
 std::string toString(unsigned char c) {
   return toHexAndDecStr(c);
 }
@@ -184,6 +196,12 @@ std::string toString(float f) {
 
 std::string toString(double f) {
   return toValStr(f);
+}
+
+std::string toTypeAndValueString(std::nullptr_t p) {
+  std::stringstream ss;
+  ss << "(std::nullptr_t)" << toString((void*)p);
+  return ss.str();
 }
 
 } // namespace cctest

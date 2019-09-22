@@ -22,13 +22,6 @@ struct TypeString<std::string> {
   }
 };
 
-template<>
-struct TypeString<std::nullptr_t> {
-  static std::string value() {
-    return "std::nullptr_t";
-  }
-};
-
 } // namespace cctest
 
 #endif
