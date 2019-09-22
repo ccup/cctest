@@ -8,53 +8,53 @@ namespace cctest {
 namespace {
 
 template<typename T>
-std::string toValStr(T val) {
+inline std::string toValStr(T val) {
   std::stringstream ss;
   ss << val;
   return ss.str();
 }
 
-std::string toValStr(char val) {
+inline std::string toValStr(char val) {
   return toValStr((int) val);
 }
 
-std::string toValStr(signed char val) {
+inline std::string toValStr(signed char val) {
   return toValStr((int) val);
 }
 
-std::string toValStr(unsigned char val) {
+inline std::string toValStr(unsigned char val) {
   return toValStr((unsigned int) val);
 }
 
 template<typename T>
-std::string toHexStr(T val) {
+inline std::string toHexStr(T val) {
   std::stringstream ss;
   ss.flags(std::ios::hex | std::ios::showbase);
   ss << val;
   return ss.str();
 }
 
-std::string toHexStr(char val) {
+inline std::string toHexStr(char val) {
   return toHexStr((int) val & 0xFF);
 }
 
-std::string toHexStr(signed char val) {
+inline std::string toHexStr(signed char val) {
   return toHexStr((int) val & 0xFF);
 }
 
-std::string toHexStr(unsigned char val) {
+inline std::string toHexStr(unsigned char val) {
   return toHexStr((unsigned int) val & 0xFF);
 }
 
-std::string toHexStr(short val) {
+inline std::string toHexStr(short val) {
   return toHexStr((unsigned int) val & 0xFFFF);
 }
 
-std::string toHexStr(int val) {
+inline std::string toHexStr(int val) {
   return toHexStr((unsigned int) val & 0xFFFFFFFF);
 }
 
-std::string toFixedSizedHexStr(unsigned int i) {
+inline std::string toFixedSizedHexStr(unsigned int i) {
   std::stringstream ss;
   ss.flags(std::ios::hex);
   ss.fill('0');
@@ -63,19 +63,19 @@ std::string toFixedSizedHexStr(unsigned int i) {
   return ss.str();
 }
 
-std::string toFixedSizedHexStr(unsigned char val) {
+inline std::string toFixedSizedHexStr(unsigned char val) {
   return toFixedSizedHexStr((unsigned int) val & 0xFF);
 }
 
 template<typename T>
-std::string toPCharStr(const T &s) {
+inline std::string toPCharStr(const T &s) {
   std::stringstream ss;
   s == 0 ? (ss << "NULL") : (ss << "\"" << s << "\"");
   return ss.str();
 }
 
 template<typename T>
-std::string toHexAndDecStr(T val) {
+inline std::string toHexAndDecStr(T val) {
   std::stringstream ss;
   ss << toHexStr(val) << "/" << toValStr(val);
   return ss.str();
