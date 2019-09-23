@@ -25,7 +25,9 @@ struct TestMethodRegistry : TestSuiteFactory {
 
 private:
   Test* make() const override {
-    static Fixture dummy; // register all test methods to this.
+    // register all test methods to TestMethodRegistry<Fixture>, then
+    // TestMethodRegistry<Fixture>::add will collect all TestMethod belong to it.
+    static Fixture dummy;
     return TestSuiteFactory::make();
   }
 
