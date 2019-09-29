@@ -22,6 +22,14 @@ StringView::StringView(const char *d, size_t n) :
     data_(d), size_(n) {
 }
 
+size_t StringView::hash() const noexcept {
+  size_t result = 7;
+  for (int i=0; i<size_; i++) {
+    result += data_[i];
+  }
+  return result;
+}
+
 const char* StringView::data() const {
   return data_;
 }

@@ -22,6 +22,8 @@ struct StringView {
   StringView(const char* s);
   StringView(const char* d, size_t n);
 
+  size_t hash() const noexcept;
+
   const char* data() const;
   bool empty() const;
 
@@ -87,5 +89,17 @@ bool operator>=(StringView x, StringView y);
 std::ostream& operator<<(std::ostream& o, StringView);
 
 } // namespace cctest
+
+namespace std {
+
+template<>
+struct hash<cctest::StringView> {
+    size_t operator()(cctest::StringView s) const noexcept {
+      return s.hash();
+    }
+};
+
+
+} // namespace
 
 #endif

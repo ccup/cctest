@@ -1,79 +1,87 @@
 #include "cctest/factory/test_name.h"
-#include "cctest/base/string_view.h"
 #include "cctest/base/string_utils.h"
-#include <regex>
 #include <unordered_map>
+#include <regex>
+#include <iostream>
 
 namespace cctest {
 
-static std::regex regex("^@\\{(.+)\\s*(.+)\\}");
+namespace {
+  std::regex regex("^\\s*@\\{(.+)\\}(.+)$");
+} // namespace
 
-struct TestNameImpl {
-  TestNameImpl(const std::string& fullName) : times(1), disable(false) {
-    std::smatch result;
-    if (std::regex_search(std::string(fullName), result, regex)) {
-      others(result.str(1));
-      name = result.str(2);
-    }
+TestName::TestName(const char* fullname) : times_(1), disable_(false) {
+  std::cmatch result;
+  if (std::regex_search(fullname, result, regex)) {
+    annotation(result.str(1));
+    testname(result.str(2));
+  } else { // without annotation
+    testname(fullname);
   }
+}
 
-private:
-  using Action = void(TestNameImpl::*)(StringView);
-
-  void save(StringView lhs, StringView rhs) {
-    static std::unordered_map<std::string, Action> actions = {
-        {"disable", &TestNameImpl::disable_},
-        {"times",   &TestNameImpl::times_},
-        {"id",      &TestNameImpl::id_},
-        {"deps",    &TestNameImpl::deps_},
-    };
-
-    auto found = actions.find(std::string(lhs));
-    if (found != actions.end()) {
-      (this->*found->second)(rhs);
-    }
+void TestName::annotation(StringView prefix) {
+  auto specs = strutils::split(prefix, ",");
+  for (StringView spec : specs) {
+    auto pair = spec.trim().split("=");
+    auto rhs = pair.size() == 1 ? std::string("") : pair[1];
+    save(pair[0], rhs);
   }
+}
 
-private:
-  void others(const std::string& prefix) {
-    auto specs = strutils::split(prefix, ",");
-    for (StringView spec : specs) {
-      auto pair = spec.trim().split("=");
-      auto rhs = pair.size() == 1 ? StringView("") : pair[1];
-      save(pair[0], rhs);
-    }
+void TestName::save(StringView lhs, StringView rhs) {
+  using Action = void(TestName::*)(StringView);
+  static std::unordered_map<StringView, Action> actions = {
+      {"disable", &TestName::enable},
+      {"times",   &TestName::toTimes},
+      {"id",      &TestName::toId},
+      {"dep",     &TestName::toDep},
+  };
+
+  auto i = actions.find(lhs.trim());
+  if (i != actions.end()) {
+    (this->*i->second)(rhs.trim());
   }
+}
 
-private:
-  void disable_(StringView) {
-    disable = true;
-  }
+void TestName::testname(StringView name) {
+  name_ = std::string(name.trim());
+}
 
-  void times_(StringView value) {
-    times = strutils::to_uint32(value);
-  }
+void TestName::enable(StringView) {
+  disable_ = true;
+}
 
-  void id_(StringView value) {
-    id = std::string(value);
-  }
+void TestName::toTimes(StringView value) {
+  times_ = strutils::to_uint32(value);
+}
 
-  void deps_(StringView value) {
-    deps = std::string(value);
-  }
+void TestName::toId(StringView id) {
+  id_ = std::string(id);
+}
 
-private:
-  int times;
-  bool disable;
-  std::string id;
-  std::string name;
-  std::string deps;
-};
+void TestName::toDep(StringView dep) {
+  dep_ = std::string(dep);
+}
 
-TestName::TestName(const std::string& fullName)
-  : impl(new TestNameImpl(fullName)) {}
+const std::string& TestName::realname() const {
+  return name_;
+}
 
-TestName::~TestName() {
-  delete impl;
+const std::string& TestName::id() const {
+  return id_;
+}
+
+const std::string& TestName::dep() const {
+  return dep_;
+}
+
+int TestName::times() const {
+  return times_;
+}
+
+bool TestName::disable() const {
+  return disable_;
 }
 
 } // namespace cctest
