@@ -1,0 +1,10 @@
+cc_test(
+  name = "test_name_spec",
+  srcs = [
+    "test_name_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "//cctest:main",    
+  ],
+)

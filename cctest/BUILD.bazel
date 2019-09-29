@@ -15,9 +15,10 @@ cc_library(
     ],
   ),
   hdrs = glob(
-    	include = [
-      "**/*.h", 
-      "**/*.hpp"
+    include = [
+      "**/*.h",
+      "**/*.inc",
+      "**/*.hpp",
     ],
   ),
   visibility = ["//visibility:public"],
