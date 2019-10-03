@@ -11,7 +11,8 @@ int run_all_tests(int /* argc */, char** /* argv */) {
   ColorfulPrinter printer(std::cout);
   MultiListener listener({&status, &printer});
 
-  TestRunner(listener, TestSuiteFactory::root()).run();
+  TestRunner runner(listener, TestSuiteFactory::root());
+  runner.run();
   return status.successful() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 

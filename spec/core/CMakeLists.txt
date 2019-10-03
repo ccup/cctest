@@ -39,3 +39,11 @@ cc_test(
   SRCS
     test_result_spec.cc
 )
+
+cc_test(
+  NAME
+    test_desc_spec
+  SRCS
+    test_desc_spec.cc
+)
+

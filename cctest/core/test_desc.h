@@ -6,17 +6,17 @@
 namespace cctest {
 
 /**
- * TestName prefix contains test meta.
+ * TestDesc prefix contains test meta.
  * for example:
  * "@{disable, id=id1, deps=id0, times=3} real test name"
  * */
-struct TestName {
-  TestName(const char* fullname);
+struct TestDesc {
+  TestDesc(const char* desc);
 
   int times() const;
   bool disable() const;
 
-  const std::string& realname() const;
+  const std::string& name() const;
   const std::string& id() const;
   const std::string& dep() const;
 

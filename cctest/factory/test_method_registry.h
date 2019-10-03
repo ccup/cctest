@@ -16,9 +16,9 @@ struct TestMethodRegistry : TestSuiteFactory {
     return registry;
   }
 
-  void add(int id, const char *name, Method<Fixture> method) {
+  void add(int id, const char* desc, Method<Fixture> method) {
     if (!exist(id)) {
-      registry.insert({id, {name, method}});
+      registry.insert({id, {desc, method}});
       TestSuiteFactory::add(registry.at(id));
     }
   }

@@ -32,6 +32,18 @@ cc_test(
 )
 
 cc_test(
+  name = "test_desc_spec",
+  srcs = [
+    "test_desc_spec.cc"
+  ],
+  deps = [
+    "//cctest",
+    "//cctest:main",    
+  ],
+)
+
+
+cc_test(
   name = "test_fixture_spec",
   srcs = [
     "test_fixture_spec.cc",
