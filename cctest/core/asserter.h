@@ -16,7 +16,7 @@ namespace cctest {
 
 //////////////////////////////////////////////////////////////////
 #define __CCTEST_REPORT_FAILURE(what) \
-    throw AssertionError(__FILE__, __LINE__, what)
+    throw cctest::AssertionError(__FILE__, __LINE__, what)
 
 //////////////////////////////////////////////////////////////////
 #define __CCTEST_ASSERT_BOOL(expr, not_comp, expected_value, wrong_value) do { \
