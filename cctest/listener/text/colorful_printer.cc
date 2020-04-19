@@ -19,11 +19,11 @@ struct ColorfulPrinter::Writer {
     onFinished(test);
   }
 
-  void writeOnStartTestSuite(const Test& test) const {
+  void writeOnStartTestOnce(const Test& test) const {
     onSuiteStarted(test);
   }
 
-  void writeOnEndTestSuite(const Test& test) const {
+  void writeOnEndTestOnce(const Test& test) const {
     onSuiteFinished(test);
   }
 
@@ -169,14 +169,14 @@ void ColorfulPrinter::endTestCase(const Test& test) {
   writer->writeOnEndTestCase(test);
 }
 
-void ColorfulPrinter::startTestSuite(const Test& test) {
-  MultiListener::startTestSuite(test);
-  writer->writeOnStartTestSuite(test);
+void ColorfulPrinter::startTestOnce(const Test& test) {
+  MultiListener::startTestOnce(test);
+  writer->writeOnStartTestOnce(test);
 }
 
-void ColorfulPrinter::endTestSuite(const Test& test) {
-  MultiListener::endTestSuite(test);
-  writer->writeOnEndTestSuite(test);
+void ColorfulPrinter::endTestOnce(const Test& test) {
+  MultiListener::endTestOnce(test);
+  writer->writeOnEndTestOnce(test);
 }
 
 void ColorfulPrinter::addFailure(const TestFailure& fail) {

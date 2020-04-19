@@ -1,5 +1,6 @@
 #include "cctest/except/assertion_error.h"
 #include <sstream>
+#include <iostream>
 
 namespace cctest {
 

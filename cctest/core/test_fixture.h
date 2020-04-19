@@ -4,6 +4,9 @@
 namespace cctest {
 
 struct TestFixture {
+  static void setUpFixture() {}
+  static void tearDownFixture() {}
+
   virtual void setUp() {}
   virtual void tearDown() {}
   virtual ~TestFixture() {}
