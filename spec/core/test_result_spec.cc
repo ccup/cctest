@@ -12,7 +12,7 @@ FIXTURE(TestCaseSpec) {
   TestCollector collector;
   TestResult result;
 
-  SETUP {
+  BEFORE {
     result.addListener(collector);
     result.addListener(list);
   }

@@ -12,7 +12,7 @@ FIXTURE(TestSuiteResult) {
   TestResult result;
   TestSuite suite;
 
-  SETUP {
+  BEFORE {
     result.addListener(collector);
   }
 

@@ -32,35 +32,19 @@ struct type : virtual cctest::GenericAutoFixture<__VA_ARGS__> \
             , cctest::Self<type>
 
 ///////////////////////////////////////////////////////////////
-#define SETUP    void setUp() override
-#define TEARDOWN void tearDown() override
+#define BEFORE void setUp() override
+#define AFTER  void tearDown() override
 
 ///////////////////////////////////////////////////////////////
-#define BEFORE SETUP
-#define AFTER TEARDOWN
+#define SUPER_BEFORE(super) super::setUp()
+#define SUPER_AFTER(super)  super::tearDown()
 
 ///////////////////////////////////////////////////////////////
-#define SUPER_SETUP(super) super::setUp()
-#define SUPER_TEARDOWN(super) super::tearDown()
+#define BEFORE_FIXTURE static void setUpFixture()
+#define AFTER_FIXTURE  static void tearDownFixture()
 
 ///////////////////////////////////////////////////////////////
-#define SUPER_BEFORE(super) SUPER_SETUP(super)
-#define SUPER_AFTER(super) SUPER_TEARDOWN(super)
-
-///////////////////////////////////////////////////////////////
-#define SETUP_FIXTURE static void setUpFixture()
-#define TEARDOWN_FIXTURE static void tearDownFixture()
-
-///////////////////////////////////////////////////////////////
-#define BEFORE_FIXTURE SETUP_FIXTURE
-#define AFTER_FIXTURE TEARDOWN_FIXTURE
-
-///////////////////////////////////////////////////////////////
-#define SUPER_SETUP_FIXTURE(super) super::setUpFixture()
-#define SUPER_TEARDOWN_FIXTURE(super) super::tearDownFixture()
-
-///////////////////////////////////////////////////////////////
-#define SUPER_BEFORE_FIXTURE(super) SUPER_SETUP_FIXTURE(super)
-#define SUPER_AFTER_FIXTURE(super) SUPER_TEARDOWN_FIXTURE(super)
+#define SUPER_BEFORE_FIXTURE(super) super::setUpFixture()
+#define SUPER_AFTER_FIXTURE(super)  super::tearDownFixture()
 
 #endif

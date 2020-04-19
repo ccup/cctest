@@ -10,7 +10,7 @@ FIXTURE(TestStatusSpec) {
   TestResult result;
   TestStatus status;
 
-  SETUP {
+  BEFORE {
     result.addListener(status);
   }
 

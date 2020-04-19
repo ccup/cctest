@@ -10,22 +10,21 @@ FIXTURE(QueueSpec) {
 
   static std::queue<int> shared;
 
-  SETUP_FIXTURE {
-    ASSERT_TRUE(shared.empty());
-    FAIL("setup fixture fail");
-  }
-
-  TEARDOWN_FIXTURE {
+  BEFORE_FIXTURE {
     ASSERT_TRUE(shared.empty());
   }
 
-  SETUP {
+  AFTER_FIXTURE {
+    ASSERT_TRUE(shared.empty());
+  }
+
+  BEFORE {
     ASSERT_TRUE(shared.empty());
     q.push(1);
     q.push(2);
   }
 
-  TEARDOWN {
+  AFTER {
     ASSERT_TRUE(shared.empty());
   }
 
