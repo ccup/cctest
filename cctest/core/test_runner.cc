@@ -1,5 +1,5 @@
 #include "cctest/core/test_runner.h"
-#include "cctest/hook/hook_registry.h"
+#include "cctest/factory/test_hook_registry.h"
 #include "cctest/factory/test_factory.h"
 #include "cctest/core/test.h"  // delete root
 
@@ -15,9 +15,11 @@ TestRunner::~TestRunner() {
 }
 
 void TestRunner::run() {
-  HookRegistry::before().exec();
+  TestFixture& hook = TestHookRegistry::inst();
+
+  hook.setUp();
   result.runRootTest(*root);
-  HookRegistry::after().exec();
+  hook.tearDown();
 }
 
 } // namespace cctest

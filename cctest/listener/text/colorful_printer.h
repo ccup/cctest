@@ -24,9 +24,6 @@ private:
   void startTestOnce(const Test&) override;
   void endTestOnce(const Test&) override;
 
-//  void startTestSuite(const Test&) override;
-//  void endTestSuite(const Test&) override;
-
   void startTestCase(const Test&) override;
   void endTestCase(const Test&) override;
 

@@ -47,3 +47,9 @@ cc_test(
     test_desc_spec.cc
 )
 
+cc_test(
+  NAME
+    test_hook_spec
+  SRCS
+    test_hook_spec.cc
+)

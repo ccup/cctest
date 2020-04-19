@@ -1,6 +1,5 @@
 add_subdirectory(base)
 add_subdirectory(auto)
 add_subdirectory(core)
-add_subdirectory(hook)
 add_subdirectory(listener)
 add_subdirectory(matcher)
