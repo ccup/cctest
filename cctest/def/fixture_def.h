@@ -6,19 +6,45 @@
 #include "cctest/base/symbol.h"
 #include "cctest/base/self.h"
 
-/////////////////////////////////////////////////////////////
-#define FIXTURE(type)                                    \
-struct type;                                             \
-static cctest::AutoTestFixture<type>                     \
-CCTEST_UNIQUE_NAME(auto_suite_){CCTEST_STRINGIZE(type)}; \
-struct type : cctest::TestFixture, cctest::Self<type>
+///////////////////////////////////////////////////////////////
+namespace cctest {
+template <typename... Fixtures>
+struct GenericAutoFixture;
 
-/////////////////////////////////////////////////////////////
-#define SETUP    void setUp() override 
-#define TEARDOWN void tearDown() override
+template <typename Head, typename... Tail>
+struct GenericAutoFixture<Head, Tail...>
+    : virtual Head
+    , virtual GenericAutoFixture<Tail...>
+{};
 
-/////////////////////////////////////////////////////////////
-#define SUPER_SETUP(super) super::setUp() 
-#define SUPER_TEARDOWN(super) super::tearDown()
+template <>
+struct GenericAutoFixture<> : TestFixture
+{};
+
+} // cctest
+
+///////////////////////////////////////////////////////////////
+#define FIXTURE(type, ...)                                    \
+struct type;                                                  \
+static cctest::AutoTestFixture<type>                          \
+CCTEST_UNIQUE_NAME(auto_suite_){CCTEST_STRING(type)};         \
+struct type : virtual cctest::GenericAutoFixture<__VA_ARGS__> \
+            , cctest::Self<type>
+
+///////////////////////////////////////////////////////////////
+#define BEFORE void setUp() override
+#define AFTER  void tearDown() override
+
+///////////////////////////////////////////////////////////////
+#define SUPER_BEFORE(super) super::setUp()
+#define SUPER_AFTER(super)  super::tearDown()
+
+///////////////////////////////////////////////////////////////
+#define BEFORE_FIXTURE static void setUpFixture()
+#define AFTER_FIXTURE  static void tearDownFixture()
+
+///////////////////////////////////////////////////////////////
+#define SUPER_BEFORE_FIXTURE(super) super::setUpFixture()
+#define SUPER_AFTER_FIXTURE(super)  super::tearDownFixture()
 
 #endif

@@ -8,12 +8,13 @@ namespace cctest {
 struct TestResult;
 
 struct Test {
-  Test(const std::string& name = "");
-  const std::string& getName() const;
+  explicit Test(const std::string& name = "");
+  virtual ~Test() {}
+
+  virtual const std::string& getName() const;
 
   virtual int countTestCases() const = 0;
   virtual void run(TestResult&) = 0;
-  virtual ~Test() {}
 
 private:
   std::string name;

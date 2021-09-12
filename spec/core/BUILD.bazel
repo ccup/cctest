@@ -75,3 +75,14 @@ cc_test(
     "//cctest:main",    
   ]
 )
+
+cc_test(
+  name = "test_hook_spec",
+  srcs = [
+    "test_hook_spec.cc",
+  ],
+  deps = [
+    "//cctest",
+    "//cctest:main",    
+  ]
+)

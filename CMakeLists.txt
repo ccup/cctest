@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 
 project(cctest CXX)
 
@@ -30,7 +30,7 @@ else()
 endif()
 
 ## options
-option(CCTEST_RUN_TESTS "If ON, cctest test cases will be run." ON)
+option(CCTEST_RUN_TESTS "If ON, cctest test cases will be run." OFF)
 
 ## enable test runtime
 if(${CCTEST_RUN_TESTS})
@@ -41,7 +41,6 @@ endif()
 if(BUILD_TESTING)
   list(APPEND CCTEST_TEST_COMMON_LIBS
     cctest_main
-    cctest
   )
 endif()
 

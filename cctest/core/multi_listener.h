@@ -16,6 +16,9 @@ protected:
   void startTestRun(const Test&) override;
   void endTestRun(const Test&) override;
 
+  void startTestOnce(const Test&) override;
+  void endTestOnce(const Test&) override;
+
   void startTestSuite(const Test&) override;
   void endTestSuite(const Test&) override;
 

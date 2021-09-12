@@ -3,12 +3,13 @@
 
 #include <vector>
 #include "cctest/core/test.h"
-#include "cctest/core/internal/bare_test_suite.h"
+#include "cctest/core/bare_test_suite.h"
 
 namespace cctest {
 
 struct TestSuite : Test, private BareTestSuite {
   using Test::Test;
+
   ~TestSuite() override;
 
   void add(Test* test);

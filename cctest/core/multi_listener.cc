@@ -6,7 +6,6 @@ MultiListener::MultiListener(std::vector<TestListener*> listeners)
   : listeners(std::move(listeners)) {
 }
 
-
 void MultiListener::addListener(TestListener& listener) {
   listeners.push_back(&listener);
 }
@@ -28,6 +27,14 @@ void MultiListener::startTestSuite(const Test& test) {
 
 void MultiListener::endTestSuite(const Test& test) {
   BOARDCAST(endTestSuite(test));
+}
+
+void MultiListener::startTestOnce(const Test& test) {
+  BOARDCAST(startTestOnce(test));
+}
+
+void MultiListener::endTestOnce(const Test& test) {
+  BOARDCAST(endTestOnce(test));
 }
 
 void MultiListener::startTestCase(const Test& test) {

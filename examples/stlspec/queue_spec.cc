@@ -8,7 +8,7 @@ namespace {
 FIXTURE(QueueSpec) {
   std::queue<int> q;
 
-  SETUP {
+  BEFORE {
     q.push(1);
     q.push(2);
   }

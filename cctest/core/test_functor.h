@@ -3,11 +3,15 @@
 
 namespace cctest {
 
-struct TestCaseMethod {
-  virtual const char* who() const = 0;
+struct TestFunctor {
+  virtual const char* who() const {
+    return "";
+  }
+
   virtual const char* where() const = 0;
-  virtual bool operator()() const = 0;
-  virtual ~TestCaseMethod() {}
+  virtual void operator()() const = 0;
+
+  virtual ~TestFunctor() {}
 };
 
 } // namespace cctest

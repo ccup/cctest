@@ -8,9 +8,24 @@ namespace {
 FIXTURE(QueueSpec) {
   std::queue<int> q;
 
-  SETUP {
+  static std::queue<int> shared;
+
+  BEFORE_FIXTURE {
+    ASSERT_TRUE(shared.empty());
+  }
+
+  AFTER_FIXTURE {
+    ASSERT_TRUE(shared.empty());
+  }
+
+  BEFORE {
+    ASSERT_TRUE(shared.empty());
     q.push(1);
     q.push(2);
+  }
+
+  AFTER {
+    ASSERT_TRUE(shared.empty());
   }
 
   TEST("apply pop 0 time") {
@@ -30,5 +45,7 @@ FIXTURE(QueueSpec) {
     ASSERT_TRUE(q.empty());
   }
 };
+
+std::queue<int> QueueSpec::shared;
 
 } // namespace

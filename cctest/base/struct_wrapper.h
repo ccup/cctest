@@ -5,21 +5,19 @@ namespace cctest {
 
 template<typename From, typename To>
 struct StructWrapper: protected From {
-
   static const To& by(const From& from) {
-    static_assert(sizeof(From) == sizeof(To), "");
+    static_assert(sizeof(From) == sizeof(To), "should be the same size");
     return (const To&) from;
   }
 
   static To& by(From& from) {
-    static_assert(sizeof(From) == sizeof(To), "");
+    static_assert(sizeof(From) == sizeof(To), "should be the same size");
     return (To&) from;
   }
 };
 
 #define CCTEST_STRUCT_WRAPPER(To, From) \
-  struct To : cctest::StructWrapper<From, To>
-
+struct To : cctest::StructWrapper<From, To>
 
 } // namespace cctest
 

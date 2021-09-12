@@ -8,7 +8,7 @@ namespace {
 FIXTURE(StackSpec) {
   std::stack<int> v;
 
-  SETUP {
+  BEFORE {
     v.push(1);
     v.push(2);
   }

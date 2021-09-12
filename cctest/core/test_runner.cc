@@ -1,6 +1,7 @@
 #include "cctest/core/test_runner.h"
-#include "cctest/core/test.h"
+#include "cctest/factory/test_hook_registry.h"
 #include "cctest/factory/test_factory.h"
+#include "cctest/core/test.h"  // delete root
 
 namespace cctest {
 
@@ -14,7 +15,11 @@ TestRunner::~TestRunner() {
 }
 
 void TestRunner::run() {
+  TestFixture& hook = TestHookRegistry::inst();
+
+  hook.setUp();
   result.runRootTest(*root);
+  hook.tearDown();
 }
 
 } // namespace cctest

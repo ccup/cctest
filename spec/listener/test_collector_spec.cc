@@ -11,7 +11,7 @@ FIXTURE(TestCollectorSpec) {
   TestCollector collector;
   TestResult result;
 
-  SETUP {
+  BEFORE {
     result.addListener(collector);
   }
 

@@ -1,15 +1,15 @@
 #include "cctest/core/test_case.h"
 #include "cctest/core/test_result.h"
 #include "cctest/core/method.h"
-#include "cctest/core/internal/test_case_method.h"
+#include "cctest/core/test_functor.h"
 #include "cctest/except/assertion_error.h"
 
 namespace cctest {
 
 namespace {
 
-struct Functor : TestCaseMethod {
-  Functor(TestCase* self, Method<TestCase> method, const char* place)
+struct TestCaseFunctor : TestFunctor {
+  TestCaseFunctor(TestCase* self, Method<TestCase> method, const char* place)
     : self(self), method(method), place(place) {
   }
 
@@ -19,26 +19,25 @@ private:
   }
 
   const char* where() const override {
-    return place;
+    return place.c_str();
   }
 
-  bool operator()() const override {
+  void operator()() const override {
     (self->*method)();
-    return true;
   }
 
 private:
   TestCase* self;
   Method<TestCase> method;
-  const char* place;
+  std::string place;
 };
 
 } // namespace
 
 #define PROTECT(method) \
-  p.protect(Functor(this, &TestCase::method,  "in the "#method))
+  p.protect(TestCaseFunctor(this, &TestCase::method, "in the "#method))
 
-void TestCase::runBare(TestCaseProtector& p) {
+void TestCase::runBare(TestProtector& p) {
   if (PROTECT(setUp)) {
     PROTECT(runTest);
   }

@@ -4,11 +4,11 @@
 namespace cctest {
 
 struct Test;
-struct TestCaseProtector;
+struct TestProtector;
 
 struct BareTestCase {
   virtual const Test& get() const = 0;
-  virtual void runBare(TestCaseProtector&) = 0;
+  virtual void runBare(TestProtector&) = 0;
 
   virtual ~BareTestCase() {}
 };

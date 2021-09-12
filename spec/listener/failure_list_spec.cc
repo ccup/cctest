@@ -10,7 +10,7 @@ FIXTURE(FailureListerSpec) {
   FailureList list;
   TestResult result;
 
-  SETUP {
+  BEFORE {
     result.addListener(list);
   }
 

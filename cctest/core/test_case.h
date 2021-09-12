@@ -3,7 +3,7 @@
 
 #include "cctest/core/test.h"
 #include "cctest/core/test_fixture.h"
-#include "cctest/core/internal/bare_test_case.h"
+#include "cctest/core/bare_test_case.h"
 
 namespace cctest {
 
@@ -12,11 +12,11 @@ struct TestCase : Test, private TestFixture, private BareTestCase {
 
 private:
   int countTestCases() const override;
-  void run(TestResult& result) override;
+  void run(TestResult&) override;
 
 private:
   const Test& get() const override;
-  void runBare(TestCaseProtector&) override;
+  void runBare(TestProtector&) override;
 
 private:
   virtual void runTest() {}
