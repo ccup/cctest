@@ -102,6 +102,7 @@ list(APPEND CCTEST_LLVM_FLAGS
     "-Wall"
     "-Wextra"
     "-Weverything"
+    "-Wno-poison-system-directories"
     "-Wno-shadow-field-in-constructor"
     "-Wno-c++98-compat-pedantic"
     "-Wno-conversion"
