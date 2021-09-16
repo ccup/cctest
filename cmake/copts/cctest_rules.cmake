@@ -114,6 +114,11 @@ function(cc_library)
           ${CCTEST_CC_LIB_DEFINES}
       )
 
+      target_compile_features(${_NAME}
+        PUBLIC 
+          cxx_std_11
+      )
+
       # Add all cctest targets to a a folder in the IDE for organization.
       if(CCTEST_CC_LIB_PUBLIC)
         set_property(TARGET ${_NAME} PROPERTY FOLDER ${CCTEST_IDE_FOLDER})

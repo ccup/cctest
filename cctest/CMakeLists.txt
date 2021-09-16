@@ -31,3 +31,4 @@ cc_library(
     cctest
 )
 
+add_library(cctest::main ALIAS cctest_main)
